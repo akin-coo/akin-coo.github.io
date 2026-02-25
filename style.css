@@ -1,52 +1,56 @@
 :root {
-    --bg-black: #000000;
-    --gold: #f97316; /* Lüks vurgusu için turuncu-altın arası bir ton */
+    --pro-orange: #f97316;
 }
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: var(--bg-black);
+    background-color: #09090b;
 }
 
-.serif-font { font-family: 'Cinzel', serif; }
-.logo-text { font-family: 'Cinzel', serif; }
+h1, h2, h3, .logo-text {
+    font-family: 'Exo 2', sans-serif;
+}
 
 .nav-glass {
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(9, 9, 11, 0.9);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
 }
 
-/* Kategori Kartları: Lüks Dergi Tasarımı */
+/* Pro-RIB Kartları: Endüstriyel Tasarım */
 .category-card {
-    background: #050505;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 3rem;
-    transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-    position: relative;
-    overflow: hidden;
+    background: #111114;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    padding: 3.5rem 2.5rem;
+    transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+    border-radius: 4px; /* Köşeli, daha sert bir görünüm */
 }
 
 .category-card:hover {
-    background: #0a0a0a;
-    border-color: var(--gold);
-    transform: translateY(-10px);
-    box-shadow: 0 40px 80px rgba(0,0,0,0.8);
+    background: #16161a;
+    border-color: var(--pro-orange);
+    transform: translateY(-8px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.8);
 }
 
-.category-card::after {
-    content: "";
-    position: absolute;
-    top: 0; right: 0;
-    width: 2px; height: 0;
-    background: var(--gold);
-    transition: height 0.6s ease;
+.category-card i {
+    color: var(--pro-orange);
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
 }
 
-.category-card:hover::after {
-    height: 100%;
+.category-card h3 {
+    color: white;
+    font-weight: 900;
+    font-style: italic;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    letter-spacing: -0.05em;
 }
 
-.hero-title {
-    text-shadow: 0 0 50px rgba(0,0,0,0.8);
+.category-card p {
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: #71717a;
+    margin-bottom: 2rem;
 }
