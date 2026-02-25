@@ -3,78 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smarter AI World | Marine Propulsion Systems</title>
+    <title>Smarter AI World | Luxury Yachts & Propulsion Systems</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;600;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="text-slate-300">
+<body class="bg-black text-slate-300">
 
-    <nav class="fixed w-full z-50 nav-glass px-8 py-5 flex justify-between items-center">
-        <div class="flex items-center gap-3">
-            <div class="w-8 h-8 bg-orange-600 rounded flex items-center justify-center font-bold text-white italic">S</div>
-            <span class="text-xl font-black text-white tracking-tighter uppercase">Smarter <span class="accent-text">Marin</span></span>
+    <nav class="fixed w-full z-50 nav-glass px-12 py-6 flex justify-between items-center border-b border-white/5">
+        <div class="flex items-center gap-4">
+            <span class="logo-text text-2xl font-bold tracking-[0.2em] text-white">SMARTER <span class="text-orange-600">MARIN</span></span>
         </div>
-        <div class="hidden md:flex gap-10 text-[10px] font-bold uppercase tracking-[0.2em]">
-            <a href="#categories" class="hover:text-orange-500 transition">Hizmetler</a>
-            <a href="#process" class="hover:text-orange-500 transition">Süreç</a>
-            <a href="#contact" class="hover:text-orange-500 transition border-b border-orange-600 pb-1">İletişim</a>
+        <div class="hidden lg:flex gap-12 text-[11px] font-bold uppercase tracking-[0.3em] text-slate-400">
+            <a href="#yacht-sales" class="hover:text-white transition">Yat Portföyü</a>
+            <a href="#engine-systems" class="hover:text-white transition">Motor Sistemleri</a>
+            <a href="#consultancy" class="hover:text-white transition">Teknik Danışmanlık</a>
         </div>
+        <a href="#contact" class="bg-orange-600 text-white px-6 py-2 text-[10px] font-bold uppercase tracking-widest hover:bg-white hover:text-black transition duration-500">Talep Oluştur</a>
     </nav>
 
-    <header class="pt-56 pb-32 px-8 text-center max-w-5xl mx-auto">
-        <h1 class="text-7xl md:text-9xl font-black text-white mb-8 leading-[0.85] tracking-tighter animate__animated animate__fadeIn">
-            SMART <br><span class="text-orange-600">PROPULSION.</span>
-        </h1>
-        <p class="text-lg text-slate-400 max-w-2xl mx-auto mb-12 animate__animated animate__fadeInUp animate__delay-1s">
-            Endüstriyel marin mekaniğini, yapay zeka destekli diagnostik sistemlerle optimize ediyoruz. Verimlilik, güç ve dijital takip bir arada.
-        </p>
+    <header class="relative h-screen flex flex-col justify-center items-center text-center px-6 overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center opacity-40 scale-105"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black"></div>
+        
+        <div class="relative z-10 animate__animated animate__fadeIn">
+            <span class="text-orange-500 font-bold tracking-[0.5em] text-xs mb-6 block uppercase">Elite Marine Engineering</span>
+            <h1 class="hero-title text-7xl md:text-9xl font-black text-white mb-8 leading-none tracking-tighter">
+                SADECE <br> <span class="italic font-light opacity-50">EN İYİSİ.</span>
+            </h1>
+            <p class="text-xl text-slate-300 max-w-3xl mx-auto font-light leading-relaxed">
+                Dünyanın en prestijli yat motorları ve lüks deniz araçları için akıllı çözümler. Gücü estetikle, mekaniği yapay zeka ile birleştiriyoruz.
+            </p>
+        </div>
     </header>
 
-    <section id="categories" class="py-24 px-8 max-w-7xl mx-auto">
-        <div id="category-container" class="grid lg:grid-cols-4 md:grid-cols-2 gap-8"></div>
+    <section id="categories-section" class="py-32 px-12 max-w-[1600px] mx-auto">
+        <div id="category-container" class="grid lg:grid-cols-4 md:grid-cols-2 gap-10">
+            </div>
     </section>
 
-    <section id="process" class="py-24 bg-slate-900/30 border-y border-slate-800/50">
-        <div class="max-w-7xl mx-auto px-8">
-            <h2 class="text-center text-4xl font-black text-white mb-20 italic underline decoration-orange-600">OPERASYONEL SÜREÇ</h2>
-            <div class="grid md:grid-cols-3 gap-12">
-                <div class="text-center">
-                    <div class="text-5xl font-black text-slate-800 mb-4">01</div>
-                    <h3 class="text-xl font-bold text-white mb-2">Analiz</h3>
-                    <p class="text-sm text-slate-500">Motor verilerinin ve performans geçmişinin dijital olarak taranması.</p>
+    <section id="tech-specs" class="py-32 bg-zinc-950 border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-12 grid lg:grid-cols-2 gap-20 items-center">
+            <div>
+                <h2 class="text-4xl font-bold text-white mb-8 serif-font">Neden Smarter Marin?</h2>
+                <div class="space-y-12">
+                    <div class="flex gap-6">
+                        <div class="text-orange-600 text-3xl"><i class="fa-solid fa-microchip"></i></div>
+                        <div>
+                            <h4 class="text-white font-bold mb-2 uppercase tracking-widest text-sm">AI Tabanlı Diagnostik</h4>
+                            <p class="text-sm text-slate-500">Motorunuzun sağlık durumunu gerçek zamanlı algoritmalarla takip ediyor, olası arızaları 100 saat önceden tahmin ediyoruz.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6">
+                        <div class="text-orange-600 text-3xl"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div>
+                            <h4 class="text-white font-bold mb-2 uppercase tracking-widest text-sm">Global Servis Ağı</h4>
+                            <p class="text-sm text-slate-500">MTU, Caterpillar ve MAN gibi devlerin sistemlerinde sertifikalı mühendislik desteği sağlıyoruz.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="text-center">
-                    <div class="text-5xl font-black text-slate-800 mb-4">02</div>
-                    <h3 class="text-xl font-bold text-white mb-2">Simülasyon</h3>
-                    <p class="text-sm text-slate-500">AI modelleri ile en uygun parça ve pervane konfigürasyonunun belirlenmesi.</p>
+            </div>
+            <div class="relative">
+                <div class="aspect-video bg-slate-800 rounded-2xl overflow-hidden shadow-2xl border border-white/10">
+                    <img src="https://images.unsplash.com/photo-1605281317010-fe5ffe798166?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000" alt="Marine Engine">
                 </div>
-                <div class="text-center">
-                    <div class="text-5xl font-black text-slate-800 mb-4">03</div>
-                    <h3 class="text-xl font-bold text-white mb-2">Uygulama</h3>
-                    <p class="text-sm text-slate-500">Mekanik müdahale ve sistemin akıllı takip modüllerine bağlanması.</p>
+                <div class="absolute -bottom-10 -right-10 bg-orange-600 p-10 rounded-2xl hidden md:block">
+                    <span class="text-5xl font-black text-white italic tracking-tighter">01.</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="contact" class="py-32 px-8 text-center">
-        <div class="max-w-2xl mx-auto bg-white p-12 rounded-[3rem] shadow-2xl">
-            <h2 class="text-4xl font-black text-slate-900 mb-4">TEKNİK DANIŞMANLIK</h2>
-            <p class="text-slate-600 mb-10">Motor veya sistem bilgilerinizi ileterek uzman görüşü alın.</p>
-            <form action="#" class="space-y-4">
-                <input type="text" placeholder="Adınız / Şirketiniz" class="w-full p-4 rounded-xl border border-slate-200 focus:outline-orange-600 text-slate-900">
-                <textarea placeholder="Sistem veya Motor Detayları (Model, HP, Sorun)" class="w-full p-4 rounded-xl border border-slate-200 focus:outline-orange-600 text-slate-900 h-32"></textarea>
-                <button type="submit" class="w-full bg-orange-600 text-white p-4 rounded-xl font-bold hover:bg-slate-900 transition duration-500">ANALİZ TALEBİ GÖNDER</button>
-            </form>
+    <footer id="contact" class="py-20 text-center border-t border-white/5 bg-black">
+        <p class="text-[10px] tracking-[0.6em] text-slate-600 mb-8 uppercase italic">Smarter AI World // Excellence in Marine Technology</p>
+        <div class="flex justify-center gap-12 text-white/40 text-xs font-bold tracking-widest mb-12 uppercase">
+            <span>Adana</span>
+            <span>Mersin</span>
+            <span>Bodrum</span>
+            <span>Monaco</span>
         </div>
-    </section>
-
-    <footer class="py-12 text-center text-[10px] tracking-[0.5em] text-slate-600">
-        SMARTER AI WORLD // ADANA TECHNICAL CENTER // 2026
+        <a href="mailto:vip@smarteraiworld.com" class="text-white border border-white/20 px-12 py-5 rounded-full hover:bg-white hover:text-black transition duration-500 text-sm font-bold tracking-widest uppercase">VIP Danışmanlık Hattı</a>
     </footer>
 
     <script src="script.js"></script>
