@@ -1,46 +1,44 @@
-const services = [
+const products = [
     {
-        title: "Lüks Yat Satış",
+        title: "Tactical RIB Serisi",
         icon: "fa-ship",
-        desc: "Sıfır ve ikinci el premium yat portföyü için teknik ekspertiz ve danışmanlık.",
-        points: ["Ekspertiz Raporu", "Pazar Analizi", "Gövde Kondisyon Takibi"]
+        desc: "Yüksek hızlı devriye ve özel operasyonlar için tasarlanmış derin V gövde RIB botlar.",
+        specs: ["Hypalon Tüp Yapısı", "7-12 Metre Seçenekleri", "Şok Emici Koltuklar"]
     },
     {
-        title: "Yüksek Güçlü Motorlar",
+        title: "Dıştan Takma Güç",
         icon: "fa-engine",
-        desc: "MTU, Caterpillar ve Cummins motor gruplarında yüksek performans çözümleri.",
-        points: ["Ağır Bakım (W6)", "Turbo Değişim", "Emisyon Optimizasyonu"]
+        desc: "Pro-RIB modelleri için optimize edilmiş çift ve üçlü motor kurulum çözümleri.",
+        specs: ["300HP - 600HP Seçenekleri", "Dijital Gaz & Vites", "Joystick Kontrolü"]
     },
     {
-        title: "İtki Teknolojileri",
-        icon: "fa-fan",
-        desc: "Yüksek hızlı tekneler için karbon fiber şaft ve özel pervane tasarımları.",
-        points: ["Kavite Analizi", "Sessiz Sürüş Ayarları", "Yüksek Hız Kararlılığı"]
+        title: "Marin Navigasyon",
+        icon: "fa-compass",
+        desc: "Ağır hizmet tipi sonar, radar ve termal kamera entegre sistemleri.",
+        specs: ["Dokunmatik Chartplotter", "Gece Görüş Analizi", "Otomatik Pilot"]
     },
     {
-        title: "AI Yat Otomasyonu",
+        title: "AI Verim Paketi",
         icon: "fa-microchip",
-        desc: "Yatınızın tüm sistemlerini tek bir akıllı merkezden yöneten RPA çözümleri.",
-        points: ["Otonom İzleme", "Yakıt Verimliliği", "Akıllı Güvenlik"]
+        desc: "Gövde direncini minimize eden ve yakıt tüketimini anlık optimize eden yazılım.",
+        specs: ["Trim Optimizasyonu", "Anlık Yakıt Takibi", "Motor Sağlık İzleme"]
     }
 ];
 
-function loadServices() {
+function loadProducts() {
     const container = document.getElementById('category-container');
     if (!container) return;
 
-    container.innerHTML = services.map((item, i) => `
-        <div class="category-card group animate__animated animate__fadeInUp" style="animation-delay: ${i * 0.1}s">
-            <div class="mb-10 text-orange-600 text-4xl transition-transform duration-700 group-hover:scale-110">
-                <i class="fa-solid ${item.icon}"></i>
-            </div>
-            <h3 class="text-2xl font-bold text-white mb-4 serif-font uppercase tracking-tighter">${item.title}</h3>
-            <p class="text-sm text-slate-500 mb-8 leading-relaxed font-light">${item.desc}</p>
-            <ul class="space-y-4">
-                ${item.points.map(p => `
-                    <li class="flex items-center gap-3 text-[11px] font-bold text-slate-400 uppercase tracking-widest">
-                        <span class="w-1 h-1 bg-orange-600"></span>
-                        ${p}
+    container.innerHTML = products.map((p, i) => `
+        <div class="category-card animate__animated animate__fadeInUp" style="animation-delay: ${i * 0.15}s">
+            <i class="fa-solid ${p.icon}"></i>
+            <h3 class="text-2xl italic">${p.title}</h3>
+            <p>${p.desc}</p>
+            <ul class="space-y-3">
+                ${p.specs.map(s => `
+                    <li class="flex items-center gap-3 text-[10px] font-bold text-white uppercase tracking-widest">
+                        <div class="w-1.5 h-1.5 bg-orange-600"></div>
+                        ${s}
                     </li>
                 `).join('')}
             </ul>
@@ -48,4 +46,4 @@ function loadServices() {
     `).join('');
 }
 
-document.addEventListener('DOMContentLoaded', loadServices);
+document.addEventListener('DOMContentLoaded', loadProducts);
