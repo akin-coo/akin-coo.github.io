@@ -3,71 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smarter AI World | Marin Motor & Teknik Çözümler</title>
+    <title>Smarter AI World | Marine Propulsion Systems</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
-        .marine-gradient { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
-        .accent-gold { color: #d4af37; } /* Pirinç/Pervane rengi */
+        body { font-family: 'Inter', sans-serif; background-color: #020617; }
+        .hero-gradient {
+            background: radial-gradient(circle at top right, #1e293b, #020617);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .accent-border { border-left: 4px solid #f97316; }
     </style>
 </head>
-<body class="marine-gradient text-slate-200">
+<body class="text-slate-300">
 
-    <nav class="p-6 flex justify-between items-center border-b border-slate-700/50 backdrop-blur-md sticky top-0 z-50">
-        <div class="flex items-center gap-2">
-            <i class="fa-solid fa-anchor text-2xl accent-gold"></i>
-            <span class="text-xl font-bold tracking-widest">SMARTER MARIN</span>
+    <nav class="fixed w-full z-50 glass-card px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-orange-600 rounded-lg flex items-center justify-center font-black text-white italic">S</div>
+            <span class="text-xl font-black tracking-tighter text-white uppercase">Smarter<span class="text-orange-500">AI</span>World</span>
         </div>
-        <div class="hidden md:flex space-x-8 text-sm font-medium">
-            <a href="#motorlar" class="hover:text-[#d4af37] transition">MOTORLAR</a>
-            <a href="#ekipman" class="hover:text-[#d4af37] transition">EKİPMANLAR</a>
-            <a href="#iletisim" class="bg-white text-slate-900 px-5 py-2 rounded-full hover:bg-[#d4af37] transition">TEKLİF AL</a>
+        <div class="hidden md:flex gap-8 text-xs font-bold tracking-widest uppercase">
+            <a href="#services" class="hover:text-orange-500 transition">Engine Solutions</a>
+            <a href="#tech" class="hover:text-orange-500 transition">Smart Analysis</a>
+            <a href="#contact" class="text-orange-500 border border-orange-500/50 px-4 py-2 rounded-md hover:bg-orange-500 hover:text-white transition">Direct Contact</a>
         </div>
     </nav>
 
-    <header class="relative py-24 px-6 text-center overflow-hidden">
-        <div class="absolute inset-0 opacity-10 pointer-events-none">
-            <i class="fa-solid fa-ship text-[20rem] absolute -bottom-10 -left-20 rotate-12"></i>
+    <header class="hero-gradient min-h-screen flex flex-col justify-center px-6 pt-20">
+        <div class="max-w-5xl mx-auto">
+            <span class="text-orange-500 font-bold tracking-[0.3em] uppercase mb-4 block animate__animated animate__fadeIn">Industrial Marine Engineering</span>
+            <h1 class="text-6xl md:text-8xl font-black text-white leading-none mb-8 animate__animated animate__fadeInUp">
+                INTELLIGENT <br> <span class="opacity-50 text-slate-500 underline decoration-orange-600">PROPULSION</span>.
+            </h1>
+            <p class="text-xl text-slate-400 max-w-2xl mb-10 leading-relaxed animate__animated animate__fadeInUp animate__delay-1s">
+                We merge traditional marine mechanics with AI-driven diagnostics. High-performance engine consulting, part optimization, and technical lifecycle management.
+            </p>
+            <div class="flex gap-4 animate__animated animate__fadeInUp animate__delay-1s">
+                <a href="#contact" class="bg-orange-600 text-white px-8 py-4 rounded-sm font-bold hover:bg-orange-700 transition">Technical Inquiry</a>
+                <a href="#services" class="border border-slate-700 px-8 py-4 rounded-sm font-bold hover:bg-white hover:text-black transition">Browse Equipment</a>
+            </div>
         </div>
-        <h1 class="text-5xl md:text-7xl font-serif font-bold mb-6 italic">Gücü Denizden, <span class="accent-gold">Zekayı Bizden</span> Alın.</h1>
-        <p class="text-slate-400 max-w-2xl mx-auto text-lg mb-10">
-            Tekne motoru revizyonu, pervane seçim analizleri ve en son teknoloji marin ekipmanları hakkında profesyonel teknik destek.
-        </p>
     </header>
 
-    <section id="motorlar" class="max-w-6xl mx-auto py-16 px-6">
-        <h2 class="text-3xl font-bold mb-12 flex items-center gap-4">
-            <span class="h-[2px] w-12 bg-[#d4af37]"></span> MOTOR TEKNOLOJİLERİ
-        </h2>
-        <div class="grid md:grid-cols-3 gap-8">
-            <div class="bg-slate-800/50 p-8 rounded-xl border border-slate-700 hover:translate-y-[-5px] transition">
-                <i class="fa-solid fa-gears text-4xl mb-6 accent-gold"></i>
-                <h3 class="text-xl font-bold mb-3">Dizel Segmenti</h3>
-                <p class="text-sm text-slate-400 leading-relaxed">Yüksek torklu, yakıt cimrisi marin dizel motorların bakım periyotları ve verimlilik artırma yöntemleri.</p>
+    
+    <section id="services" class="py-24 px-6 max-w-7xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+                <h2 class="text-4xl font-black text-white mb-6">Unrivaled Expertise in <br> <span class="text-orange-500">Marine Hardware</span></h2>
+                <div class="space-y-6">
+                    <div class="accent-border pl-6">
+                        <h4 class="text-white font-bold uppercase">Turbocharger Optimization</h4>
+                        <p class="text-sm">Mapping airflow efficiency to maximize engine torque at lower RPMs.</p>
+                    </div>
+                    <div class="accent-border pl-6">
+                        <h4 class="text-white font-bold uppercase">Hybrid System Integration</h4>
+                        <p class="text-sm">Consulting on battery-electric transitions for zero-emission harbor maneuvering.</p>
+                    </div>
+                    <div class="accent-border pl-6">
+                        <h4 class="text-white font-bold uppercase">Condition Monitoring</h4>
+                        <p class="text-sm">AI-assisted predictive maintenance schedules to prevent mid-sea failures.</p>
+                    </div>
+                </div>
             </div>
-            <div class="bg-slate-800/50 p-8 rounded-xl border border-slate-700 hover:translate-y-[-5px] transition">
-                <i class="fa-solid fa-bolt text-4xl mb-6 accent-gold"></i>
-                <h3 class="text-xl font-bold mb-3">Elektrikli Tahrik</h3>
-                <p class="text-sm text-slate-400 leading-relaxed">Sessiz seyir isteyenler için yeni nesil elektrikli dıştan takma motor rehberi ve batarya sistemleri.</p>
-            </div>
-            <div class="bg-slate-800/50 p-8 rounded-xl border border-slate-700 hover:translate-y-[-5px] transition">
-                <i class="fa-solid fa-gauge-high text-4xl mb-6 accent-gold"></i>
-                <h3 class="text-xl font-bold mb-3">Performans Analizi</h3>
-                <p class="text-sm text-slate-400 leading-relaxed">Gövde yapınıza göre en uygun beygir gücü (HP) hesaplamaları ve sürat optimizasyonu.</p>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="glass-card p-8 rounded-2xl text-center">
+                    <div class="text-4xl font-black text-white mb-2">35%</div>
+                    <div class="text-[10px] uppercase tracking-widest text-orange-500">Fuel Efficiency Gain</div>
+                </div>
+                <div class="glass-card p-8 rounded-2xl text-center">
+                    <div class="text-4xl font-black text-white mb-2">0%</div>
+                    <div class="text-[10px] uppercase tracking-widest text-orange-500">Unscheduled Downtime</div>
+                </div>
+                <div class="glass-card p-8 rounded-2xl text-center col-span-2">
+                    <div class="text-xl font-bold text-white mb-1 uppercase italic">Precision Engineering</div>
+                    <div class="text-[10px] uppercase tracking-widest text-slate-500 text-center">Adana & Mediterranean Technical Hub</div>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="iletisim" class="bg-[#d4af37] text-slate-900 py-16 px-6 text-center">
-        <h2 class="text-4xl font-black mb-4 uppercase">Teknik Destek Mi Lazım?</h2>
-        <p class="mb-8 font-medium">Uzman ekibimizle WhatsApp üzerinden anında iletişime geçin.</p>
-        <a href="https://wa.me/905XXXXXXXXX" class="bg-slate-900 text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-slate-800 transition shadow-xl">
-            WHATSAPP İLE BAĞLAN
+    <section id="contact" class="py-20 bg-white text-slate-900 px-6 text-center">
+        <h2 class="text-5xl font-black mb-6">READY TO UPGRADE?</h2>
+        <p class="text-lg mb-10 max-w-xl mx-auto opacity-70">Submit your engine specs and receive a technical optimization report from our specialist team.</p>
+        <a href="mailto:contact@smarteraiworld.com" class="bg-slate-900 text-white px-12 py-5 rounded-full font-black hover:scale-105 transition-transform inline-block shadow-2xl">
+            SEND SPECIFICATIONS
         </a>
     </section>
 
-    <footer class="p-10 text-center text-slate-500 text-xs tracking-widest">
-        &copy; 2026 SMARTER MARIN WORLD | 01 ADANA | TÜM HAKLARI SAKLIDIR.
+    <footer class="py-12 border-t border-slate-800 text-center text-[10px] tracking-[0.5em] uppercase text-slate-600">
+        &copy; 2026 Smarter AI World | Precision Marine Engineering
     </footer>
 
 </body>
