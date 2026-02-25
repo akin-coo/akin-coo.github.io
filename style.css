@@ -1,0 +1,28 @@
+body { 
+    font-family: 'Space Grotesk', sans-serif; 
+    background-color: #020617; 
+    scroll-behavior: smooth; 
+}
+
+.nav-glass { 
+    background: rgba(2, 6, 23, 0.8); 
+    backdrop-filter: blur(10px); 
+}
+
+.accent-text { 
+    color: #f97316; 
+}
+
+.category-card { 
+    border: 1px solid rgba(255,255,255,0.05); 
+    transition: all 0.4s ease; 
+    padding: 2rem;
+    border-radius: 1rem;
+    background: rgba(15, 23, 42, 0.5);
+}
+
+.category-card:hover { 
+    border-color: #f97316; 
+    transform: translateY(-10px); 
+    background: rgba(249, 115, 22, 0.05); 
+}
