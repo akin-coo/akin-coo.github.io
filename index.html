@@ -3,55 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RPA Developer Portfolyo</title>
+    <title>Smarter AI World | Marin Motor & Teknik Çözümler</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .marine-gradient { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
+        .accent-gold { color: #d4af37; } /* Pirinç/Pervane rengi */
+    </style>
 </head>
-<body class="bg-slate-900 text-white font-sans">
+<body class="marine-gradient text-slate-200">
 
-    <nav class="p-6 flex justify-between items-center border-b border-slate-800">
-        <div class="text-2xl font-bold text-blue-400 tracking-wider">RPA_DEV_v1.0</div>
-        <div class="space-x-6">
-            <a href="#projects" class="hover:text-blue-400">Projeler</a>
-            <a href="#skills" class="hover:text-blue-400">Yetenekler</a>
-            <a href="mailto:email@adresin.com" class="bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700">İletişim</a>
+    <nav class="p-6 flex justify-between items-center border-b border-slate-700/50 backdrop-blur-md sticky top-0 z-50">
+        <div class="flex items-center gap-2">
+            <i class="fa-solid fa-anchor text-2xl accent-gold"></i>
+            <span class="text-xl font-bold tracking-widest">SMARTER MARIN</span>
+        </div>
+        <div class="hidden md:flex space-x-8 text-sm font-medium">
+            <a href="#motorlar" class="hover:text-[#d4af37] transition">MOTORLAR</a>
+            <a href="#ekipman" class="hover:text-[#d4af37] transition">EKİPMANLAR</a>
+            <a href="#iletisim" class="bg-white text-slate-900 px-5 py-2 rounded-full hover:bg-[#d4af37] transition">TEKLİF AL</a>
         </div>
     </nav>
 
-    <section class="py-20 text-center">
-        <h1 class="text-5xl md:text-7xl font-extrabold mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-            Merhaba, Ben Bir RPA Geliştiricisiyim
-        </h1>
-        <p class="text-slate-400 text-xl max-w-2xl mx-auto mb-8">
-            İş süreçlerini otomatize ediyor, UiPath ile dijital dönüşümün sınırlarını zorluyorum. Karmaşık işleri botlara bırakın, siz stratejiye odaklanın.
+    <header class="relative py-24 px-6 text-center overflow-hidden">
+        <div class="absolute inset-0 opacity-10 pointer-events-none">
+            <i class="fa-solid fa-ship text-[20rem] absolute -bottom-10 -left-20 rotate-12"></i>
+        </div>
+        <h1 class="text-5xl md:text-7xl font-serif font-bold mb-6 italic">Gücü Denizden, <span class="accent-gold">Zekayı Bizden</span> Alın.</h1>
+        <p class="text-slate-400 max-w-2xl mx-auto text-lg mb-10">
+            Tekne motoru revizyonu, pervane seçim analizleri ve en son teknoloji marin ekipmanları hakkında profesyonel teknik destek.
         </p>
-        <div class="flex justify-center space-x-4">
-            <span class="bg-slate-800 px-4 py-2 rounded-full border border-blue-500/30 text-blue-300">#UiPath</span>
-            <span class="bg-slate-800 px-4 py-2 rounded-full border border-blue-500/30 text-blue-300">#Python</span>
-            <span class="bg-slate-800 px-4 py-2 rounded-full border border-blue-500/30 text-blue-300">#Automation</span>
+    </header>
+
+    <section id="motorlar" class="max-w-6xl mx-auto py-16 px-6">
+        <h2 class="text-3xl font-bold mb-12 flex items-center gap-4">
+            <span class="h-[2px] w-12 bg-[#d4af37]"></span> MOTOR TEKNOLOJİLERİ
+        </h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="bg-slate-800/50 p-8 rounded-xl border border-slate-700 hover:translate-y-[-5px] transition">
+                <i class="fa-solid fa-gears text-4xl mb-6 accent-gold"></i>
+                <h3 class="text-xl font-bold mb-3">Dizel Segmenti</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">Yüksek torklu, yakıt cimrisi marin dizel motorların bakım periyotları ve verimlilik artırma yöntemleri.</p>
+            </div>
+            <div class="bg-slate-800/50 p-8 rounded-xl border border-slate-700 hover:translate-y-[-5px] transition">
+                <i class="fa-solid fa-bolt text-4xl mb-6 accent-gold"></i>
+                <h3 class="text-xl font-bold mb-3">Elektrikli Tahrik</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">Sessiz seyir isteyenler için yeni nesil elektrikli dıştan takma motor rehberi ve batarya sistemleri.</p>
+            </div>
+            <div class="bg-slate-800/50 p-8 rounded-xl border border-slate-700 hover:translate-y-[-5px] transition">
+                <i class="fa-solid fa-gauge-high text-4xl mb-6 accent-gold"></i>
+                <h3 class="text-xl font-bold mb-3">Performans Analizi</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">Gövde yapınıza göre en uygun beygir gücü (HP) hesaplamaları ve sürat optimizasyonu.</p>
+            </div>
         </div>
     </section>
 
-    <section id="projects" class="py-16 px-6 max-w-6xl mx-auto">
-        <h2 class="text-3xl font-bold mb-10 border-l-4 border-blue-600 pl-4">Öne Çıkan Otomasyonlar</h2>
-        <div class="grid md:grid-cols-2 gap-8">
-            <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 hover:border-blue-500 transition-all">
-                <i class="fa-solid fa-robot text-4xl text-blue-500 mb-4"></i>
-                <h3 class="text-xl font-bold mb-2">E-Fatura Otomasyonu</h3>
-                <p class="text-slate-400 italic mb-4">UiPath Orchestrator & SQL</p>
-                <p class="text-sm">Gelen faturaların otomatik olarak ayrıştırılması ve ERP sistemine hatasız işlenmesi sürecini %90 hızlandırdım.</p>
-            </div>
-            <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 hover:border-blue-500 transition-all">
-                <i class="fa-brands fa-youtube text-4xl text-red-500 mb-4"></i>
-                <h3 class="text-xl font-bold mb-2">YouTube İçerik Botu</h3>
-                <p class="text-slate-400 italic mb-4">Gemini API & Video Editing Automation</p>
-                <p class="text-sm">Çocuklar için otomatik şarkı ve video oluşturup YouTube'a yükleyen uçtan uca bir otomasyon tasarladım.</p>
-            </div>
-        </div>
+    <section id="iletisim" class="bg-[#d4af37] text-slate-900 py-16 px-6 text-center">
+        <h2 class="text-4xl font-black mb-4 uppercase">Teknik Destek Mi Lazım?</h2>
+        <p class="mb-8 font-medium">Uzman ekibimizle WhatsApp üzerinden anında iletişime geçin.</p>
+        <a href="https://wa.me/905XXXXXXXXX" class="bg-slate-900 text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-slate-800 transition shadow-xl">
+            WHATSAPP İLE BAĞLAN
+        </a>
     </section>
 
-    <footer class="py-10 text-center text-slate-500 border-t border-slate-800">
-        <p>© 2026 - Tüm Botlar Tarafından Korunmaktadır</p>
+    <footer class="p-10 text-center text-slate-500 text-xs tracking-widest">
+        &copy; 2026 SMARTER MARIN WORLD | 01 ADANA | TÜM HAKLARI SAKLIDIR.
     </footer>
 
 </body>
