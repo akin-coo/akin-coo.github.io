@@ -1,80 +1,75 @@
-// 1. Slider Verileri
-const sliderData = [
-    { baslik: "PRO-SERIES 750", alt: "Ağır Hizmet Taktik Bot", img: "https://images.unsplash.com/photo-1544413647-ad348270543e?q=80&w=1920" },
-    { baslik: "TWIN POWER ENGINE", alt: "Çift Motorlu İtki Sistemleri", img: "https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?q=80&w=1920" },
-    { baslik: "SMART DIAGNOSTICS", alt: "AI Destekli Marin Yazılımları", img: "https://images.unsplash.com/photo-1605281317010-fe5ffe798166?q=80&w=1920" }
+// Slider Verileri (Northstar Tarzı Görseller)
+const slides = [
+    { title: "AXIS 4.8", sub: "YENİ NESİL TENDER", img: "https://images.unsplash.com/photo-1544413647-ad348270543e?q=80&w=1920" },
+    { title: "ORION 7", sub: "DENİZLERİN YENİ HAKİMİ", img: "https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?q=80&w=1920" },
+    { title: "ION 12", sub: "SINIRSIZ GÜÇ VE LÜKS", img: "https://images.unsplash.com/photo-1605281317010-fe5ffe798166?q=80&w=1920" }
 ];
 
-// 2. Ürün Kataloğu Verileri (15 Ürünlük Liste Örneği)
-const products = {
-    botlar: [
-        { ad: "Patrol-X 450", detay: "Hypalon / Derin V", fiyat: "Teklif Al" },
-        { ad: "Patrol-X 550", detay: "Askeri Gri / 1670 Dtex", fiyat: "Teklif Al" },
-        { ad: "Storm-RIB 620", detay: "Profesyonel Dalgıç Tipi", fiyat: "Teklif Al" },
-        { ad: "Storm-RIB 750", detay: "Arama Kurtarma Özel", fiyat: "Teklif Al" },
-        { ad: "Master-RIB 850", detay: "Yat Tender / Lüks Seri", fiyat: "Teklif Al" },
-        { ad: "Master-RIB 1100", detay: "Çift Motor Uyumlu Cabin", fiyat: "Teklif Al" },
-        { ad: "Commando 500", detay: "Katlanabilir Taban / Ağır Hizmet", fiyat: "Teklif Al" }
-        // Buraya 15'e kadar bot eklenebilir...
+// Kapsamlı Ürün Kataloğu
+const catalog = {
+    axis: [
+        { ad: "Axis 3.1", specs: "L: 3.10m | 20-30 HP", img: "https://images.unsplash.com/photo-1517055727180-d1a978355448?q=80&w=800" },
+        { ad: "Axis 3.4", specs: "L: 3.40m | 25-40 HP", img: "https://images.unsplash.com/photo-1517055727180-d1a978355448?q=80&w=800" },
+        { ad: "Axis 4.8", specs: "L: 4.80m | 60-90 HP", img: "https://images.unsplash.com/photo-1517055727180-d1a978355448?q=80&w=800" },
+        { ad: "Axis 5.3", specs: "L: 5.30m | 90-115 HP", img: "https://images.unsplash.com/photo-1517055727180-d1a978355448?q=80&w=800" }
+    ],
+    ion: [
+        { ad: "Ion 10", specs: "L: 10.10m | 2x300 HP", img: "https://images.unsplash.com/photo-1605281317010-fe5ffe798166?q=80&w=800" },
+        { ad: "Ion 12", specs: "L: 12.50m | 3x450 HP", img: "https://images.unsplash.com/photo-1605281317010-fe5ffe798166?q=80&w=800" }
+    ],
+    orion: [
+        { ad: "Orion 6", specs: "L: 6.20m | 150-200 HP", img: "https://images.unsplash.com/photo-1544413647-ad348270543e?q=80&w=800" },
+        { ad: "Orion 7", specs: "L: 7.20m | 200-300 HP", img: "https://images.unsplash.com/photo-1544413647-ad348270543e?q=80&w=800" },
+        { ad: "Orion 8", specs: "L: 8.40m | 300-450 HP", img: "https://images.unsplash.com/photo-1544413647-ad348270543e?q=80&w=800" }
     ],
     motorlar: [
-        { ad: "V6 250HP Outboard", detay: "Dijital Gaz / Vites", fiyat: "Teklif Al" },
-        { ad: "V8 450HP Racing", detay: "Yüksek Performans / Tork", fiyat: "Teklif Al" },
-        { ad: "115HP Pro-Line", detay: "Ekonomik Ticari Seri", fiyat: "Teklif Al" },
-        { ad: "150HP Sea-Drive", detay: "AI Yakıt Tasarruflu", fiyat: "Teklif Al" }
-        // Buraya 15'e kadar motor eklenebilir...
-    ],
-    aksesuar: [
-        { ad: "Smart Trim AI", detay: "Otomatik Denge Sistemi", fiyat: "Teklif Al" },
-        { ad: "Diagnostic HUB", detay: "Mobil Takip Arıza Tespit", fiyat: "Teklif Al" }
+        { ad: "V8 450HP Pro", specs: "Heavy Duty Outboard", img: "https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?q=80&w=800" },
+        { ad: "V6 250HP Marine", specs: "Fuel Efficient AI", img: "https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?q=80&w=800" }
     ]
 };
 
-// Fonksiyon: Slider'ı Yükle
-function initSlider() {
-    const wrapper = document.getElementById('slider-wrapper');
-    wrapper.innerHTML = sliderData.map(s => `
-        <div class="swiper-slide" style="background-image: url('${s.img}')">
-            <div class="slide-overlay"></div>
-            <div class="relative z-10 text-center">
-                <h2 class="text-6xl md:text-8xl font-black text-white italic tracking-tighter">${s.baslik}</h2>
-                <p class="text-orange-500 font-bold tracking-[0.4em] mt-4 uppercase text-xs">${s.alt}</p>
+// Fonksiyonlar
+function initMainSlider() {
+    const swiperWrapper = document.getElementById('hero-slider');
+    swiperWrapper.innerHTML = slides.map(s => `
+        <div class="swiper-slide relative">
+            <img src="${s.img}" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black/40"></div>
+            <div class="absolute left-12 bottom-32 max-w-2xl text-left">
+                <span class="text-orange-600 font-bold tracking-[0.6em] text-xs mb-4 block">${s.sub}</span>
+                <h2 class="text-8xl font-black italic tracking-tighter leading-none">${s.title}</h2>
             </div>
         </div>
     `).join('');
 
-    new Swiper(".mySwiper", {
+    new Swiper(".mainSlider", {
         loop: true,
-        autoplay: { delay: 4000 },
-        navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+        effect: "fade",
+        autoplay: { delay: 5000 },
         pagination: { el: ".swiper-pagination", clickable: true }
     });
 }
 
-// Fonksiyon: Ürünleri Filtrele ve Bas
-function filterProducts(category) {
+function filterProducts(cat) {
     const grid = document.getElementById('product-grid');
     const btns = document.querySelectorAll('.filter-btn');
     
-    // Aktif Buton Efekti
-    btns.forEach(btn => btn.classList.remove('active'));
+    btns.forEach(b => b.classList.remove('active'));
     event?.target?.classList?.add('active');
 
-    grid.innerHTML = products[category].map(p => `
-        <div class="product-card animate__animated animate__fadeIn">
-            <div class="product-img-placeholder"><i class="fa-solid fa-ship fa-2xl opacity-10"></i></div>
-            <h4 class="text-white font-bold uppercase tracking-tighter text-lg">${p.ad}</h4>
-            <p class="text-slate-600 text-[10px] mt-1 tracking-widest uppercase">${p.detay}</p>
-            <div class="mt-6 flex justify-between items-center">
-                <span class="text-orange-600 font-black text-xs uppercase">${p.fiyat}</span>
-                <i class="fa-solid fa-arrow-right text-slate-800"></i>
+    grid.innerHTML = catalog[cat].map(p => `
+        <div class="product-card group">
+            <div class="product-img-box">
+                <img src="${p.img}" alt="${p.ad}">
+                <div class="absolute top-4 right-4 text-[10px] font-bold bg-white text-black px-3 py-1 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition">İncele</div>
             </div>
+            <h4>${p.ad}</h4>
+            <p class="text-[10px] tracking-[0.3em] text-zinc-600 uppercase mt-2 font-bold">${p.specs}</p>
         </div>
     `).join('');
 }
 
-// Başlat
 document.addEventListener('DOMContentLoaded', () => {
-    initSlider();
-    filterProducts('botlar'); // İlk açılışta botları göster
+    initMainSlider();
+    filterProducts('axis');
 });
