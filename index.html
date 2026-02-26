@@ -3,54 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smarter Marin | Pro-RIB & Outboard Solutions</title>
+    <title>Smarter Marin | Northstar & Pro-Performance</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-[#050505] text-slate-300">
+<body class="bg-black text-white selection:bg-orange-600">
 
-    <nav class="fixed w-full z-[100] nav-glass px-8 py-4 flex justify-between items-center border-b border-white/5">
-        <span class="text-xl font-black text-white uppercase tracking-tighter italic">Smarter <span class="text-orange-600">Marin</span></span>
-        <div class="hidden md:flex gap-8 text-[10px] font-bold uppercase tracking-widest">
-            <a href="#katalog" class="hover:text-orange-500 transition">Ürün Kataloğu</a>
-            <a href="#iletisim" class="hover:text-orange-500 transition">Teknik Destek</a>
+    <nav class="fixed w-full z-[100] px-12 py-8 flex justify-between items-center bg-gradient-to-b from-black/80 to-transparent">
+        <div class="flex items-center gap-2">
+            <span class="text-2xl font-black tracking-tighter italic">SMARTER<span class="text-orange-600">MARIN</span></span>
         </div>
-        <a href="https://wa.me/905XXXXXXXXX" class="bg-orange-600 text-white px-5 py-2 text-[10px] font-bold uppercase tracking-widest hover:bg-white hover:text-black transition duration-500">WhatsApp Katalog</a>
+        <div class="hidden lg:flex gap-12 text-[10px] font-bold uppercase tracking-[0.4em] opacity-70">
+            <a href="#katalog" class="hover:opacity-100 transition">Koleksiyon</a>
+            <a href="#teknoloji" class="hover:opacity-100 transition">Teknoloji</a>
+            <a href="#iletisim" class="hover:opacity-100 transition">İletişim</a>
+        </div>
+        <div class="flex items-center gap-6">
+            <a href="https://wa.me/905XXXXXXXXX" class="text-[10px] font-black uppercase tracking-widest border-b-2 border-orange-600 pb-1">Bize Ulaşın</a>
+        </div>
     </nav>
 
-    <div class="swiper mySwiper h-[80vh]">
-        <div class="swiper-wrapper" id="slider-wrapper">
+    <div class="swiper mainSlider h-screen">
+        <div class="swiper-wrapper" id="hero-slider">
             </div>
-        <div class="swiper-button-next text-white"></div>
-        <div class="swiper-button-prev text-white"></div>
-        <div class="swiper-pagination"></div>
+        <div class="swiper-pagination !text-left !left-12 !bottom-20"></div>
     </div>
 
-    <section id="katalog" class="py-24 px-8 max-w-[1600px] mx-auto">
-        <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8 border-b border-white/10 pb-10">
-            <div>
-                <h2 class="text-5xl font-black text-white italic tracking-tighter mb-4 uppercase">Teknik Katalog</h2>
-                <div class="flex gap-4" id="category-filters">
-                    <button class="filter-btn active" onclick="filterProducts('botlar')">PRO-RIB BOTLAR</button>
-                    <button class="filter-btn" onclick="filterProducts('motorlar')">DIŞTAN TAKMA MOTORLAR</button>
-                    <button class="filter-btn" onclick="filterProducts('aksesuar')">EKİPMAN & AI</button>
+    <section id="katalog" class="py-32 px-12">
+        <div class="max-w-[1800px] mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-baseline mb-20">
+                <h2 class="text-6xl md:text-8xl font-black italic tracking-tighter uppercase leading-none">Seçkin <br> <span class="text-zinc-800">Seriler.</span></h2>
+                <div class="flex gap-8 mt-10 md:mt-0 overflow-x-auto pb-4 scrollbar-hide">
+                    <button class="filter-btn active" onclick="filterProducts('axis')">AXIS SERİSİ</button>
+                    <button class="filter-btn" onclick="filterProducts('ion')">ION SERİSİ</button>
+                    <button class="filter-btn" onclick="filterProducts('orion')">ORION SERİSİ</button>
+                    <button class="filter-btn" onclick="filterProducts('motorlar')">DIŞTAN TAKMA</button>
                 </div>
             </div>
-            <p class="text-slate-500 text-xs font-bold tracking-[0.3em] uppercase max-w-[250px]">
-                Adana & Mersin Bölgesi Yetkili Teknik Çözüm Merkezi
-            </p>
-        </div>
 
-        <div id="product-grid" class="grid lg:grid-cols-4 md:grid-cols-2 gap-6">
-            </div>
+            <div id="product-grid" class="grid lg:grid-cols-3 md:grid-cols-2 gap-x-12 gap-y-24">
+                </div>
+        </div>
     </section>
 
-    <footer id="iletisim" class="py-20 bg-black text-center border-t border-white/5">
-        <h3 class="text-white font-black text-2xl mb-4">DETAYLI TEKNİK DOSYA İSTEYİN</h3>
-        <p class="text-slate-500 mb-10 text-sm">Smarter AI Marin Ekibi 7/24 Teknik Destek Sunar.</p>
-        <a href="mailto:info@smarteraiworld.com" class="border border-white/20 px-10 py-4 text-xs font-bold uppercase tracking-[0.3em] hover:bg-orange-600 hover:border-orange-600 transition duration-500">Dosya Talebi Gönder</a>
+    <section id="teknoloji" class="py-40 bg-zinc-950 px-12">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-32 items-center">
+            <div class="relative group overflow-hidden rounded-2xl">
+                <img src="https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?q=80&w=1200" class="w-full grayscale hover:grayscale-0 transition duration-1000 scale-105 group-hover:scale-100">
+            </div>
+            <div>
+                <span class="text-orange-600 font-bold tracking-[0.4em] text-xs uppercase mb-6 block">// Vakum İnfüzyon</span>
+                <h3 class="text-5xl font-black mb-8 italic uppercase tracking-tighter">Hafif, <br> Daha Güçlü, <br> Daha Hızlı.</h3>
+                <p class="text-zinc-500 leading-relaxed mb-10 font-light">
+                    Northstar tarzı üretim felsefemizle, gövde ağırlığını optimize ediyor ve denizci karakteri en üst düzeyde botlar sunuyoruz. AI destekli performans analizlerimizle motor-pervane uyumunu kusursuzlaştırıyoruz.
+                </p>
+                <div class="grid grid-cols-2 gap-10">
+                    <div>
+                        <div class="text-3xl font-bold mb-2 font-mono">50+ KNOT</div>
+                        <div class="text-[10px] uppercase tracking-widest text-zinc-600">Maksimum Sürat</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold mb-2 font-mono">%15</div>
+                        <div class="text-[10px] uppercase tracking-widest text-zinc-600">Yakıt Tasarrufu</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="iletisim" class="py-20 px-12 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-10">
+        <span class="text-xs font-bold tracking-[0.5em] opacity-30">© 2026 SMARTER MARIN // NORTHSTAR SOLUTIONS</span>
+        <div class="flex gap-8">
+            <a href="#" class="text-[10px] font-bold uppercase tracking-widest hover:text-orange-600 transition">Instagram</a>
+            <a href="mailto:sales@smarteraiworld.com" class="text-[10px] font-bold uppercase tracking-widest hover:text-orange-600 transition">Email</a>
+        </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
