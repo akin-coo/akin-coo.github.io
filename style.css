@@ -1,31 +1,71 @@
+:root {
+    --primary: #f97316;
+    --dark: #000000;
+    --light-bg: #fdfdfd;
+    --border: #eeeeee;
+    --text-muted: #666666;
+}
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { background-color: #0a0a0a; color: #fff; font-family: 'Inter', sans-serif; line-height: 1.6; }
+body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--light-bg); color: var(--dark); overflow-x: hidden; scroll-behavior: smooth; }
 
 /* Navbar */
-.navbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background: #000; position: sticky; top: 0; z-index: 100; }
-.logo { font-size: 24px; font-weight: 900; font-style: italic; }
-.logo span { color: #f97316; }
-.nav-links { display: flex; list-style: none; gap: 30px; }
-.nav-links a { color: #888; text-decoration: none; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; }
-.nav-links a:hover { color: #f97316; }
+.navbar { position: fixed; width: 100%; top: 0; padding: 30px 6%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; transition: 0.5s ease; }
+.navbar.scrolled { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); padding: 15px 6%; border-bottom: 1px solid var(--border); }
+.logo { font-size: 22px; font-weight: 800; letter-spacing: -1px; }
+.logo span { color: var(--primary); }
+.nav-cta { text-decoration: none; background: var(--dark); color: white; padding: 10px 25px; border-radius: 50px; font-size: 11px; font-weight: 800; letter-spacing: 1px; }
 
-/* Hero Slider Area */
-.hero { height: 60vh; background: linear-gradient(rgba(0,0,0,0.5), #0a0a0a), url('https://northstar.boats/assets/img/about-us-banner.webp'); background-size: cover; background-position: center; display: flex; align-items: flex-end; padding: 50px; }
-.hero-content h2 { font-size: 3rem; font-style: italic; text-transform: uppercase; }
+/* Hero Slider */
+.hero-slider { height: 100vh; position: relative; overflow: hidden; background: #eee; }
+.slider-track { height: 100%; display: flex; transition: 1s cubic-bezier(0.7, 0, 0.3, 1); }
+.slide { min-width: 100%; height: 100%; background-size: cover; background-position: center; }
 
-/* Catalog */
-.catalog-section { padding: 80px 50px; }
-.section-header { margin-bottom: 50px; border-left: 4px solid #f97316; padding-left: 20px; }
-.section-header h3 { font-size: 2rem; text-transform: uppercase; }
-.section-header p { color: #555; font-size: 14px; }
+.hero-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 10; padding: 20px; }
+.hero-glass-card { background: rgba(255,255,255,0.1); backdrop-filter: blur(20px); padding: 50px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.2); text-align: center; color: white; }
+.tagline { color: var(--primary); font-size: 10px; font-weight: 800; letter-spacing: 5px; }
+.hero-glass-card h1 { font-size: 4.5rem; line-height: 1; margin: 20px 0; font-weight: 300; }
+.hero-glass-card h1 strong { font-weight: 800; }
 
-.product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
+/* Sticky Filter */
+.sticky-filter { position: sticky; top: 70px; background: white; z-index: 100; border-bottom: 1px solid var(--border); padding: 20px 0; text-align: center; }
+.filter-container { display: inline-flex; gap: 5px; background: #f1f1f1; padding: 6px; border-radius: 50px; }
+.f-btn { border: none; padding: 12px 30px; font-size: 11px; font-weight: 800; border-radius: 40px; cursor: pointer; color: var(--text-muted); transition: 0.3s; background: transparent; }
+.f-btn.active { background: white; color: var(--dark); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
 
-/* Product Cards */
-.card { background: #111; border: 1px solid #222; border-radius: 12px; overflow: hidden; transition: 0.4s; padding-bottom: 20px; }
-.card:hover { border-color: #f97316; transform: translateY(-5px); }
-.card-img { width: 100%; height: 200px; background: #222; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-.card-img img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
-.card-content { padding: 20px; }
-.card-content h4 { font-size: 18px; margin-bottom: 10px; text-transform: uppercase; }
-.card-content p { color: #666; font-size: 12px; height: 40px; overflow: hidden; }
+/* Grid */
+.main-container { max-width: 1400px; margin: 0 auto; padding: 80px 6%; }
+.product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 50px; }
+
+.p-card { cursor: pointer; transition: 0.5s; }
+.p-card:hover { transform: translateY(-10px); }
+.p-img-box { height: 350px; overflow: hidden; border-radius: 4px; background: #f1f1f1; margin-bottom: 20px; }
+.p-img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.8s; }
+.p-card:hover .p-img-box img { transform: scale(1.05); }
+.p-card h3 { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+.p-card span { font-size: 10px; color: var(--primary); font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
+
+/* Full Page Detail Modal */
+.full-page-modal { display: none; position: fixed; inset: 0; background: white; z-index: 2000; overflow-y: auto; }
+.modal-inner { max-width: 1300px; margin: 0 auto; padding: 120px 6%; position: relative; }
+.close-modal-btn { position: fixed; top: 40px; left: 6%; background: var(--dark); color: white; border: none; padding: 12px 25px; border-radius: 50px; font-weight: 800; font-size: 11px; cursor: pointer; z-index: 2100; }
+
+.modal-layout { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 80px; align-items: start; }
+.modal-visual img { width: 100%; box-shadow: 0 40px 80px rgba(0,0,0,0.08); }
+.modal-sticky-info { position: sticky; top: 120px; }
+.modal-sticky-info h2 { font-size: 4.5rem; font-weight: 800; line-height: 0.9; margin-bottom: 25px; letter-spacing: -2px; }
+
+.spec-table { margin: 40px 0; border-top: 1px solid #eee; }
+.spec-row { display: flex; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid #eee; font-size: 14px; }
+.s-label { color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+.s-value { font-weight: 700; }
+
+.modal-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 50px; }
+.btn-detail { text-decoration: none; padding: 22px; text-align: center; font-weight: 800; font-size: 13px; border-radius: 4px; }
+.btn-wa { background: #25D366; color: white; }
+.btn-dark { background: var(--dark); color: white; }
+
+@media (max-width: 900px) {
+    .modal-layout { grid-template-columns: 1fr; }
+    .hero-glass-card h1 { font-size: 2.5rem; }
+}
