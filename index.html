@@ -3,41 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prorib | High-Performance Marine</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Prorib | Northstar Marine Excellence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <nav class="navbar">
+    <nav class="navbar" id="mainNav">
         <div class="logo">PRO<span>RIB</span></div>
-        <ul class="nav-links">
-            <li><a href="#" onclick="showCategory('botlar')">Botlar</a></li>
-            <li><a href="#" onclick="showCategory('motorlar')">Motorlar</a></li>
-            <li><a href="#" onclick="showCategory('ekipman')">Ekipman</a></li>
-        </ul>
+        <div class="nav-right">
+            <a href="https://wa.me/905XXXXXXXXX" class="nav-cta">TEKLİF AL</a>
+        </div>
     </nav>
 
-    <header class="hero" id="hero-slider">
-        <div class="hero-content">
-            <h2 id="slide-title">Northstar Orion 8</h2>
-            <p id="slide-desc">Derin V gövde yapısı ile ekstrem deniz koşullarında maksimum performans.</p>
+    <header class="hero-slider">
+        <div class="slider-track" id="heroTrack">
+            </div>
+        <div class="hero-overlay">
+            <div class="hero-glass-card">
+                <span class="tagline">OFFICIAL NORTHSTAR PARTNER</span>
+                <h1>SINIRSIZ <strong>PERFORMANS.</strong></h1>
+                <p>Denizdeki en yüksek mühendislik standartları ile tanışın.</p>
+                <div class="mouse-scroll"></div>
+            </div>
         </div>
     </header>
 
-    <section class="catalog-section">
-        <div class="section-header">
-            <h3 id="category-title">Bot Modelleri</h3>
-            <p id="category-info">Profesyonel RIB çözümlerimizde 10'dan fazla model seçeneği sunuyoruz.</p>
+    <section class="sticky-filter">
+        <div class="filter-container">
+            <button class="f-btn active" onclick="filterData('HEPSİ')">TÜM MODELLER</button>
+            <button class="f-btn" onclick="filterData('BOTLAR')">BOTLAR</button>
+            <button class="f-btn" onclick="filterData('MOTORLAR')">MOTORLAR</button>
+            <button class="f-btn" onclick="filterData('EKİPMAN')">EKİPMAN</button>
         </div>
-
-        <div class="product-grid" id="product-container">
-            </div>
     </section>
 
-    <footer>
-        <p>&copy; 2026 PRORIB - Marine Engineering Solutions</p>
-    </footer>
+    <main class="main-container">
+        <div class="product-grid" id="productGrid">
+            </div>
+    </main>
+
+    <div id="productModal" class="full-page-modal">
+        <div class="modal-inner">
+            <button class="close-modal-btn" onclick="closeProduct()">
+                <i class="fa-solid fa-arrow-left"></i> GERİ DÖN
+            </button>
+            <div id="modalContent" class="modal-layout">
+                </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
