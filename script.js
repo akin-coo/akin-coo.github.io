@@ -94,7 +94,7 @@ window.openProduct = function(id) {
                     <a href="https://wa.me/905XXXXXXXXX?text=${p.name} teklifi rica ediyorum." class="btn-cta wa-btn" target="_blank">
                         <i class="fab fa-whatsapp"></i> WHATSAPP
                     </a>
-                    <a href="mailto:info@prorib.com.tr" class="btn-cta mail-btn">
+                    <a href="mailto:alicomertpay_@hotmail.com" class="btn-cta mail-btn">
                         <i class="fa-solid fa-envelope"></i> E-POSTA
                     </a>
                 </div>
