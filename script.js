@@ -1,77 +1,100 @@
 const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTh9yxv6g0Hz0prdHSICMZnQ8O_-2tMz6FLg3Qe-ixdNGsnXjXjtN7dsNRh5VC3JMhP3kp8nnz6MgY3/pub?output=csv';
 
 let items = [];
-const sliderImages = [
-    'https://northstar.boats/assets/img/about-us-banner.webp',
-    'https://northstar.boats/assets/img/orion-8.webp',
-    'https://northstar.boats/assets/img/ion-12.webp'
-];
+const sliderImages = ['https://northstar.boats/assets/img/about-us-banner.webp', 'https://northstar.boats/assets/img/orion-8.webp', 'https://northstar.boats/assets/img/ion-12.webp'];
 
-async function startApp() {
-    // 1. Hero Slider Kurulumu
+async function init() {
     const track = document.getElementById('heroTrack');
-    track.innerHTML = sliderImages.map(img => `<div class="slide" style="background-image:url('${img}')"></div>`).join('');
-    
-    let slideIdx = 0;
-    setInterval(() => {
-        slideIdx = (slideIdx + 1) % sliderImages.length;
-        track.style.transform = `translateX(-${slideIdx * 100}%)`;
-    }, 5000);
+    if(track) {
+        track.innerHTML = sliderImages.map(img => `<div class="slide" style="background-image:url('${img}')"></div>`).join('');
+        let slideIdx = 0;
+        setInterval(() => { slideIdx = (slideIdx + 1) % sliderImages.length; track.style.transform = `translateX(-${slideIdx * 100}%)`; }, 5000);
+    }
 
-    // 2. Excel Verilerini Çekme
     try {
         const res = await fetch(csvUrl);
         const data = await res.text();
-        const rows = data.split(/\r?\n/).map(row => row.split(','));
+        const rows = data.split(/\r?\n/).filter(row => row.trim() !== "");
         
-        items = rows.slice(1).map((r, i) => ({
-            id: i,
-            name: r[1],
-            cat: r[2] ? r[2].toUpperCase().trim() : '',
-            desc: r[3],
-            img: r[4] ? r[4].trim() : 'https://via.placeholder.com/800',
-            specs: r[5] // Excel'deki 6. sütun: Detaylar (Boy: 7m | En: 2m)
-        })).filter(x => x.name);
+        items = rows.slice(1).map((row, i) => {
+            const r = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+            let dynamicSpecs = [];
+            for (let j = 7; j <= 17; j += 2) {
+                if(r[j] && r[j+1] && r[j].trim() !== "") {
+                    dynamicSpecs.push({ key: r[j].replace(/"/g, "").trim(), val: r[j+1].replace(/"/g, "").trim() });
+                }
+            }
+            return {
+                id: i,
+                name: r[1]?.replace(/"/g, ""),
+                cat: r[2]?.replace(/"/g, "").toUpperCase().trim() || 'DİĞER',
+                desc: r[3]?.replace(/"/g, ""),
+                images: [r[4], r[5], r[6]].map(u => u?.replace(/"/g, "").trim()).filter(u => u && u.length > 5),
+                specs: dynamicSpecs
+            };
+        }).filter(x => x.name);
 
+        createCategoryMenu();
         renderList(items);
-    } catch (err) { console.error("Hata:", err); }
+    } catch (err) { console.error("Data error:", err); }
+}
+
+function createCategoryMenu() {
+    const menu = document.getElementById('categoryMenu');
+    if(!menu) return;
+    const categories = ['HEPSİ', ...new Set(items.map(item => item.cat))];
+    menu.innerHTML = categories.map(cat => `
+        <button class="f-btn ${cat === 'HEPSİ' ? 'active' : ''}" onclick="filterData('${cat}')">${cat}</button>
+    `).join('');
 }
 
 function renderList(data) {
-    document.getElementById('productGrid').innerHTML = data.map(p => `
+    const grid = document.getElementById('productGrid');
+    if(!grid) return;
+    grid.innerHTML = data.map(p => `
         <div class="p-card" onclick="openProduct(${p.id})">
-            <div class="p-img-box"><img src="${p.img}"></div>
-            <span>${p.cat}</span>
-            <h3>${p.name}</h3>
+            <div class="p-img-box"><img src="${p.images[0]}" onerror="this.src='https://via.placeholder.com/400x300'"></div>
+            <span style="color:var(--primary); font-size:10px; font-weight:800; letter-spacing:1px; display:block; padding: 0 10px;">${p.cat}</span>
+            <h3 style="padding: 0 10px; font-size: 16px;">${p.name}</h3>
         </div>
     `).join('');
 }
 
+window.moveGallery = function(idx) {
+    const track = document.getElementById('modalTrack');
+    const dots = document.querySelectorAll('.dot');
+    if(track) track.style.transform = `translateX(-${idx * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+};
+
 function openProduct(id) {
     const p = items.find(x => x.id == id);
     const modal = document.getElementById('productModal');
-    
-    // Teknik Tablo Oluşturucu
-    const specsHTML = p.specs ? p.specs.split('|').map(s => {
-        const parts = s.split(':');
-        return `<div class="spec-row">
-            <span class="s-label">${parts[0] || ''}</span>
-            <span class="s-value">${parts[1] || ''}</span>
-        </div>`;
-    }).join('') : '';
+    const content = document.getElementById('modalContent');
+    if(!p) return;
 
-    document.getElementById('modalContent').innerHTML = `
-        <div class="modal-visual">
-            <img src="${p.img}">
-            <p style="margin-top:50px; font-size:18px; line-height:1.8; color:#555;">${p.desc}</p>
+    const galleryImgs = p.images.map((img, i) => `<img src="${img}" onclick="moveGallery(${(i + 1) % p.images.length})">`).join('');
+    const galleryDots = p.images.map((_, i) => `<div class="dot ${i===0?'active':''}" onclick="event.stopPropagation(); moveGallery(${i})"></div>`).join('');
+    const specsHTML = p.specs.map(s => `<div class="spec-item"><span>${s.key}</span><strong>${s.val}</strong></div>`).join('');
+
+    content.innerHTML = `
+        <div class="modal-gallery-side">
+            <div class="gallery-track" id="modalTrack">${galleryImgs}</div>
+            <div class="gallery-dots">${galleryDots}</div>
         </div>
-        <div class="modal-sticky-info">
-            <span style="color:#f97316; font-weight:800; letter-spacing:4px; font-size:11px;">NORTHSTAR MARINE</span>
-            <h2>${p.name}</h2>
-            <div class="spec-table">${specsHTML}</div>
-            <div class="modal-btns">
-                <a href="https://wa.me/905XXXXXXXXX?text=${p.name} modeli hakkında fiyat teklifi almak istiyorum." class="btn-detail btn-wa">WHATSAPP</a>
-                <a href="mailto:info@prorib.com.tr" class="btn-detail btn-dark">E-POSTA</a>
+        <div class="modal-info-side">
+            <div>
+                <span style="color:var(--primary); font-size:10px; font-weight:800; letter-spacing:2px;">NORTHSTAR</span>
+                <h2 style="font-size:2rem; margin:10px 0; line-height:1.1;">${p.name}</h2>
+                <p style="color:#666; font-size:14px; line-height:1.5; margin-bottom:15px;">${p.desc}</p>
+                <div class="spec-list">${specsHTML}</div>
+            </div>
+            <div class="offer-box">
+                <p style="font-size:11px; color:#666; font-weight:700;">TEKLİF ALMAK İÇİN ULAŞIN:</p>
+                <div class="offer-btns">
+                    <a href="https://wa.me/905XXXXXXXXX?text=${p.name} hakkında bilgi istiyorum." class="btn-cta wa-btn" target="_blank">WHATSAPP</a>
+                    <a href="mailto:info@prorib.com.tr" class="btn-cta mail-btn">E-POSTA</a>
+                </div>
             </div>
         </div>
     `;
@@ -84,15 +107,10 @@ function closeProduct() {
     document.body.style.overflow = "auto";
 }
 
-function filterData(cat) {
-    document.querySelectorAll('.f-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.innerText.includes(cat) || (cat === 'HEPSİ' && btn.innerText.includes('TÜM')));
-    });
+window.filterData = function(cat) {
+    document.querySelectorAll('.f-btn').forEach(btn => btn.classList.toggle('active', btn.innerText === cat));
     renderList(cat === 'HEPSİ' ? items : items.filter(x => x.cat === cat));
-}
-
-window.onscroll = () => {
-    document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 80);
 };
 
-startApp();
+window.onscroll = () => { document.getElementById('mainNav')?.classList.toggle('scrolled', window.scrollY > 50); };
+init();
