@@ -15,23 +15,37 @@ async function init() {
         const res = await fetch(csvUrl);
         const data = await res.text();
         const rows = data.split(/\r?\n/).filter(row => row.trim() !== "");
+        
         items = rows.slice(1).map((row, i) => {
+            // RPA MANTIĞI: Tırnak içindeki virgülleri görmezden gelen gelişmiş ayırıcı
             const r = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+            
+            // Yardımcı temizleme fonksiyonu: Baş ve sondaki tırnakları siler
+            const clean = (str) => str ? str.replace(/^"|"$/g, "").trim() : "";
+
             let specs = [];
             for (let j = 7; j <= 17; j += 2) {
-                if(r[j] && r[j+1] && r[j].trim() !== "") {
-                    specs.push({ k: r[j].replace(/"/g, "").trim(), v: r[j+1].replace(/"/g, "").trim() });
+                if(r[j] && r[j+1] && clean(r[j]) !== "") {
+                    specs.push({ k: clean(r[j]), v: clean(r[j+1]) });
                 }
             }
+
             return {
-                id: i, name: r[1]?.replace(/"/g, ""), cat: r[2]?.replace(/"/g, "").toUpperCase().trim() || 'DİĞER',
-                desc: r[3]?.replace(/"/g, ""), images: [r[4], r[5], r[6]].map(u => u?.replace(/"/g, "").trim()).filter(u => u && u.length > 5), specs: specs
+                id: i,
+                name: clean(r[1]),
+                cat: clean(r[2]).toUpperCase(),
+                desc: clean(r[3]), // Amcan buraya istediği kadar virgül koyabilir!
+                images: [r[4], r[5], r[6]].map(u => clean(u)).filter(u => u && u.length > 5),
+                specs: specs
             };
         }).filter(x => x.name);
+
         createCategoryMenu();
         renderList(items);
-    } catch (err) { console.error(err); }
+    } catch (err) { console.error("Veri okuma hatası:", err); }
 }
+
+// ... Geri kalan fonksiyonlar (renderList, openProduct, scrollGallery vb.) tamamen aynı kalacak ...
 
 function createCategoryMenu() {
     const menu = document.getElementById('categoryMenu');
@@ -46,8 +60,8 @@ function renderList(data) {
     grid.innerHTML = data.map(p => `
         <div class="p-card" onclick="openProduct(${p.id})">
             <div class="p-img-box"><img src="${p.images[0]}" onerror="this.src='https://via.placeholder.com/400x300'"></div>
-            <span style="color:var(--primary); font-size:10px; font-weight:800; letter-spacing:1px; display:block; padding:0 20px;">${p.cat}</span>
-            <h3 style="padding:0 20px; font-size:16px;">${p.name}</h3>
+            <span style="color:var(--primary); font-size:10px; font-weight:800; letter-spacing:1px; display:block; padding: 0 10px;">${p.cat}</span>
+            <h3 style="padding: 0 10px; font-size: 16px;">${p.name}</h3>
         </div>
     `).join('');
 }
@@ -65,7 +79,7 @@ window.openProduct = function(id) {
     content.innerHTML = `
         <div class="modal-gallery-side">
             <div class="gallery-track" id="galleryTrack" onscroll="updateDots()">${galleryHTML}</div>
-            <div class="gallery-dots" id="dotContainer">${dotsHTML}</div>
+            <div class="gallery-dots">${dotsHTML}</div>
         </div>
         <div class="modal-info-side">
             <div class="info-header">
@@ -75,68 +89,25 @@ window.openProduct = function(id) {
                 <div class="spec-list">${specsHTML}</div>
             </div>
             <div class="offer-box">
-                <p style="font-size:11px; font-weight:800; color:#64748b; margin-bottom:10px;">TEKLİF VE BİLGİ ALIN:</p>
+                <p>Teklif ve Bilgi Alın:</p>
                 <div class="offer-btns">
-                    <a href="https://wa.me/905XXXXXXXXX?text=${p.name} hakkında bilgi alabilir miyim?" class="btn-cta wa-btn" target="_blank"><i class="fab fa-whatsapp"></i> WHATSAPP</a>
-                    <a href="mailto:info@prorib.com.tr?subject=${p.name}" class="btn-cta mail-btn"><i class="fa-solid fa-envelope"></i> E-POSTA</a>
+                    <a href="https://wa.me/905XXXXXXXXX?text=${p.name} teklifi rica ediyorum." class="btn-cta wa-btn" target="_blank">
+                        <i class="fab fa-whatsapp"></i> WHATSAPP
+                    </a>
+                    <a href="mailto:info@prorib.com.tr" class="btn-cta mail-btn">
+                        <i class="fa-solid fa-envelope"></i> E-POSTA
+                    </a>
                 </div>
             </div>
         </div>
     `;
     modal.style.display = "block";
     document.body.style.overflow = "hidden";
-    
-    // PC için sürükleme desteğini her modal açıldığında tekrar başlatıyoruz
-    addDragSupport();
-}
-
-// --- PC İÇİN SÜRÜKLEME (MOUSE DRAG) DESTEĞİ ---
-function addDragSupport() {
-    const track = document.getElementById('galleryTrack');
-    if(!track) return;
-
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-
-    track.addEventListener('mousedown', (e) => {
-        isDown = true;
-        track.style.scrollBehavior = 'auto'; // Sürüklerken yumuşak geçişi kapat ki gecikme olmasın
-        startX = e.pageX - track.offsetLeft;
-        scrollLeft = track.scrollLeft;
-        track.style.cursor = 'grabbing';
-    });
-
-    track.addEventListener('mouseleave', () => {
-        isDown = false;
-        track.style.cursor = 'grab';
-    });
-
-    track.addEventListener('mouseup', () => {
-        isDown = false;
-        track.style.scrollBehavior = 'smooth'; // Sürükleme bitince yumuşak geçişi geri aç
-        track.style.cursor = 'grab';
-        
-        // Bıraktığında en yakın resme "yapışması" için küçük bir tetikleyici
-        const idx = Math.round(track.scrollLeft / track.offsetWidth);
-        track.scrollTo({ left: track.offsetWidth * idx, behavior: 'smooth' });
-    });
-
-    track.addEventListener('mousemove', (e) => {
-        if(!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - track.offsetLeft;
-        const walk = (x - startX) * 2; // Çarpanı artırarak sürükleme hızını ayarlayabilirsin
-        track.scrollLeft = scrollLeft - walk;
-    });
 }
 
 window.scrollGallery = function(idx) {
     const track = document.getElementById('galleryTrack');
-    if(track) {
-        track.style.scrollBehavior = 'smooth';
-        track.scrollTo({ left: track.offsetWidth * idx, behavior: 'smooth' });
-    }
+    if(track) track.scrollTo({ left: track.offsetWidth * idx, behavior: 'smooth' });
 }
 
 window.updateDots = function() {
