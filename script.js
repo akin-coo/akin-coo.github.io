@@ -17,10 +17,8 @@ async function init() {
         const rows = data.split(/\r?\n/).filter(row => row.trim() !== "");
         
         items = rows.slice(1).map((row, i) => {
-            // RPA MANTIĞI: Tırnak içindeki virgülleri görmezden gelen gelişmiş ayırıcı
+            // Tırnak içindeki virgülleri koruyan akıllı ayırıcı
             const r = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-            
-            // Yardımcı temizleme fonksiyonu: Baş ve sondaki tırnakları siler
             const clean = (str) => str ? str.replace(/^"|"$/g, "").trim() : "";
 
             let specs = [];
@@ -34,7 +32,7 @@ async function init() {
                 id: i,
                 name: clean(r[1]),
                 cat: clean(r[2]).toUpperCase(),
-                desc: clean(r[3]), // Amcan buraya istediği kadar virgül koyabilir!
+                desc: clean(r[3]),
                 images: [r[4], r[5], r[6]].map(u => clean(u)).filter(u => u && u.length > 5),
                 specs: specs
             };
@@ -42,10 +40,8 @@ async function init() {
 
         createCategoryMenu();
         renderList(items);
-    } catch (err) { console.error("Veri okuma hatası:", err); }
+    } catch (err) { console.error("Veri hatası:", err); }
 }
-
-// ... Geri kalan fonksiyonlar (renderList, openProduct, scrollGallery vb.) tamamen aynı kalacak ...
 
 function createCategoryMenu() {
     const menu = document.getElementById('categoryMenu');
@@ -66,6 +62,42 @@ function renderList(data) {
     `).join('');
 }
 
+// PC Sürükleme (Drag to Scroll) Desteği
+function addDragSupport() {
+    const track = document.getElementById('galleryTrack');
+    if(!track) return;
+
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    track.addEventListener('mousedown', (e) => {
+        isDown = true;
+        track.style.scrollBehavior = 'auto';
+        startX = e.pageX - track.offsetLeft;
+        scrollLeft = track.scrollLeft;
+        track.style.cursor = 'grabbing';
+    });
+
+    track.addEventListener('mouseleave', () => { isDown = false; track.style.cursor = 'grab'; });
+    track.addEventListener('mouseup', () => { 
+        isDown = false; 
+        track.style.scrollBehavior = 'smooth';
+        track.style.cursor = 'grab';
+        // En yakın resme yapışma
+        const idx = Math.round(track.scrollLeft / track.offsetWidth);
+        track.scrollTo({ left: track.offsetWidth * idx, behavior: 'smooth' });
+    });
+
+    track.addEventListener('mousemove', (e) => {
+        if(!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - track.offsetLeft;
+        const walk = (x - startX) * 2;
+        track.scrollLeft = scrollLeft - walk;
+    });
+}
+
 window.openProduct = function(id) {
     const p = items.find(x => x.id == id);
     const modal = document.getElementById('productModal');
@@ -83,7 +115,7 @@ window.openProduct = function(id) {
         </div>
         <div class="modal-info-side">
             <div class="info-header">
-                <span style="color:var(--primary); font-size:10px; font-weight:800;">NORTHSTAR MARINE</span>
+                <span style="color:var(--primary); font-size:10px; font-weight:800; letter-spacing:2px;">NORTHSTAR MARINE</span>
                 <h2 style="font-size:2rem; margin:10px 0; line-height:1.1;">${p.name}</h2>
                 <p style="color:#666; font-size:14px; line-height:1.5; margin-bottom:15px;">${p.desc}</p>
                 <div class="spec-list">${specsHTML}</div>
@@ -103,6 +135,7 @@ window.openProduct = function(id) {
     `;
     modal.style.display = "block";
     document.body.style.overflow = "hidden";
+    addDragSupport(); // Modal her açıldığında sürükleme özelliğini bağla
 }
 
 window.scrollGallery = function(idx) {
