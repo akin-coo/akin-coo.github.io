@@ -110,7 +110,7 @@ window.openProduct = function(id) {
                 <div class="spec-list">${specsHTML}</div>
             </div>
             <div class="offer-box">
-                <p>TEKLİF VE BİLGİ ALIN:</p>
+                <p>TEKLİF VE DETAYLI BİLGİ ALMAK İÇİN BİZE ULAŞIN:</p>
                 <div class="offer-btns">
                     <a href="https://wa.me/905XXXXXXXXX?text=${p.brand} ${p.name} hakkında bilgi alabilir miyim?" class="btn-cta wa-btn" target="_blank">
                         <i class="fab fa-whatsapp"></i> WHATSAPP
