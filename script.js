@@ -15,37 +15,29 @@ async function init() {
         const res = await fetch(csvUrl);
         const data = await res.text();
         const rows = data.split(/\r?\n/).filter(row => row.trim() !== "");
-        
         items = rows.slice(1).map((row, i) => {
             const r = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-            let dynamicSpecs = [];
+            let specs = [];
             for (let j = 7; j <= 17; j += 2) {
                 if(r[j] && r[j+1] && r[j].trim() !== "") {
-                    dynamicSpecs.push({ key: r[j].replace(/"/g, "").trim(), val: r[j+1].replace(/"/g, "").trim() });
+                    specs.push({ k: r[j].replace(/"/g, "").trim(), v: r[j+1].replace(/"/g, "").trim() });
                 }
             }
             return {
-                id: i,
-                name: r[1]?.replace(/"/g, ""),
-                cat: r[2]?.replace(/"/g, "").toUpperCase().trim() || 'DİĞER',
-                desc: r[3]?.replace(/"/g, ""),
-                images: [r[4], r[5], r[6]].map(u => u?.replace(/"/g, "").trim()).filter(u => u && u.length > 5),
-                specs: dynamicSpecs
+                id: i, name: r[1]?.replace(/"/g, ""), cat: r[2]?.replace(/"/g, "").toUpperCase().trim() || 'DİĞER',
+                desc: r[3]?.replace(/"/g, ""), images: [r[4], r[5], r[6]].map(u => u?.replace(/"/g, "").trim()).filter(u => u && u.length > 5), specs: specs
             };
         }).filter(x => x.name);
-
         createCategoryMenu();
         renderList(items);
-    } catch (err) { console.error("Data error:", err); }
+    } catch (err) { console.error(err); }
 }
 
 function createCategoryMenu() {
     const menu = document.getElementById('categoryMenu');
     if(!menu) return;
     const categories = ['HEPSİ', ...new Set(items.map(item => item.cat))];
-    menu.innerHTML = categories.map(cat => `
-        <button class="f-btn ${cat === 'HEPSİ' ? 'active' : ''}" onclick="filterData('${cat}')">${cat}</button>
-    `).join('');
+    menu.innerHTML = categories.map(cat => `<button class="f-btn ${cat === 'HEPSİ' ? 'active' : ''}" onclick="filterData('${cat}')">${cat}</button>`).join('');
 }
 
 function renderList(data) {
@@ -54,55 +46,108 @@ function renderList(data) {
     grid.innerHTML = data.map(p => `
         <div class="p-card" onclick="openProduct(${p.id})">
             <div class="p-img-box"><img src="${p.images[0]}" onerror="this.src='https://via.placeholder.com/400x300'"></div>
-            <span style="color:var(--primary); font-size:10px; font-weight:800; letter-spacing:1px; display:block; padding: 0 10px;">${p.cat}</span>
-            <h3 style="padding: 0 10px; font-size: 16px;">${p.name}</h3>
+            <span style="color:var(--primary); font-size:10px; font-weight:800; letter-spacing:1px; display:block; padding:0 20px;">${p.cat}</span>
+            <h3 style="padding:0 20px; font-size:16px;">${p.name}</h3>
         </div>
     `).join('');
 }
 
-window.moveGallery = function(idx) {
-    const track = document.getElementById('modalTrack');
-    const dots = document.querySelectorAll('.dot');
-    if(track) track.style.transform = `translateX(-${idx * 100}%)`;
-    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
-};
-
-function openProduct(id) {
+window.openProduct = function(id) {
     const p = items.find(x => x.id == id);
     const modal = document.getElementById('productModal');
     const content = document.getElementById('modalContent');
     if(!p) return;
 
-    const galleryImgs = p.images.map((img, i) => `<img src="${img}" onclick="moveGallery(${(i + 1) % p.images.length})">`).join('');
-    const galleryDots = p.images.map((_, i) => `<div class="dot ${i===0?'active':''}" onclick="event.stopPropagation(); moveGallery(${i})"></div>`).join('');
-    const specsHTML = p.specs.map(s => `<div class="spec-item"><span>${s.key}</span><strong>${s.val}</strong></div>`).join('');
+    const galleryHTML = p.images.map(img => `<img src="${img}" draggable="false">`).join('');
+    const dotsHTML = p.images.map((_, i) => `<div class="dot ${i===0?'active':''}" onclick="scrollGallery(${i})"></div>`).join('');
+    const specsHTML = p.specs.map(s => `<div class="spec-item"><span>${s.k}</span><strong>${s.v}</strong></div>`).join('');
 
     content.innerHTML = `
         <div class="modal-gallery-side">
-            <div class="gallery-track" id="modalTrack">${galleryImgs}</div>
-            <div class="gallery-dots">${galleryDots}</div>
+            <div class="gallery-track" id="galleryTrack" onscroll="updateDots()">${galleryHTML}</div>
+            <div class="gallery-dots" id="dotContainer">${dotsHTML}</div>
         </div>
         <div class="modal-info-side">
-            <div>
-                <span style="color:var(--primary); font-size:10px; font-weight:800; letter-spacing:2px;">NORTHSTAR</span>
+            <div class="info-header">
+                <span style="color:var(--primary); font-size:10px; font-weight:800;">NORTHSTAR MARINE</span>
                 <h2 style="font-size:2rem; margin:10px 0; line-height:1.1;">${p.name}</h2>
                 <p style="color:#666; font-size:14px; line-height:1.5; margin-bottom:15px;">${p.desc}</p>
                 <div class="spec-list">${specsHTML}</div>
             </div>
             <div class="offer-box">
-                <p style="font-size:11px; color:#666; font-weight:700;">TEKLİF ALMAK İÇİN ULAŞIN:</p>
+                <p style="font-size:11px; font-weight:800; color:#64748b; margin-bottom:10px;">TEKLİF VE BİLGİ ALIN:</p>
                 <div class="offer-btns">
-                    <a href="https://wa.me/905XXXXXXXXX?text=${p.name} hakkında bilgi istiyorum." class="btn-cta wa-btn" target="_blank">WHATSAPP</a>
-                    <a href="mailto:info@prorib.com.tr" class="btn-cta mail-btn">E-POSTA</a>
+                    <a href="https://wa.me/905XXXXXXXXX?text=${p.name} hakkında bilgi alabilir miyim?" class="btn-cta wa-btn" target="_blank"><i class="fab fa-whatsapp"></i> WHATSAPP</a>
+                    <a href="mailto:info@prorib.com.tr?subject=${p.name}" class="btn-cta mail-btn"><i class="fa-solid fa-envelope"></i> E-POSTA</a>
                 </div>
             </div>
         </div>
     `;
     modal.style.display = "block";
     document.body.style.overflow = "hidden";
+    
+    // PC için sürükleme desteğini her modal açıldığında tekrar başlatıyoruz
+    addDragSupport();
 }
 
-function closeProduct() {
+// --- PC İÇİN SÜRÜKLEME (MOUSE DRAG) DESTEĞİ ---
+function addDragSupport() {
+    const track = document.getElementById('galleryTrack');
+    if(!track) return;
+
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    track.addEventListener('mousedown', (e) => {
+        isDown = true;
+        track.style.scrollBehavior = 'auto'; // Sürüklerken yumuşak geçişi kapat ki gecikme olmasın
+        startX = e.pageX - track.offsetLeft;
+        scrollLeft = track.scrollLeft;
+        track.style.cursor = 'grabbing';
+    });
+
+    track.addEventListener('mouseleave', () => {
+        isDown = false;
+        track.style.cursor = 'grab';
+    });
+
+    track.addEventListener('mouseup', () => {
+        isDown = false;
+        track.style.scrollBehavior = 'smooth'; // Sürükleme bitince yumuşak geçişi geri aç
+        track.style.cursor = 'grab';
+        
+        // Bıraktığında en yakın resme "yapışması" için küçük bir tetikleyici
+        const idx = Math.round(track.scrollLeft / track.offsetWidth);
+        track.scrollTo({ left: track.offsetWidth * idx, behavior: 'smooth' });
+    });
+
+    track.addEventListener('mousemove', (e) => {
+        if(!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - track.offsetLeft;
+        const walk = (x - startX) * 2; // Çarpanı artırarak sürükleme hızını ayarlayabilirsin
+        track.scrollLeft = scrollLeft - walk;
+    });
+}
+
+window.scrollGallery = function(idx) {
+    const track = document.getElementById('galleryTrack');
+    if(track) {
+        track.style.scrollBehavior = 'smooth';
+        track.scrollTo({ left: track.offsetWidth * idx, behavior: 'smooth' });
+    }
+}
+
+window.updateDots = function() {
+    const track = document.getElementById('galleryTrack');
+    const dots = document.querySelectorAll('.dot');
+    if(!track || dots.length === 0) return;
+    const idx = Math.round(track.scrollLeft / track.offsetWidth);
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+}
+
+window.closeProduct = function() {
     document.getElementById('productModal').style.display = "none";
     document.body.style.overflow = "auto";
 }
@@ -112,5 +157,10 @@ window.filterData = function(cat) {
     renderList(cat === 'HEPSİ' ? items : items.filter(x => x.cat === cat));
 };
 
-window.onscroll = () => { document.getElementById('mainNav')?.classList.toggle('scrolled', window.scrollY > 50); };
+window.onscroll = () => { 
+    const nav = document.getElementById('mainNav');
+    if(window.scrollY > 50) { nav.classList.add('scrolled'); } 
+    else { nav.classList.remove('scrolled'); }
+};
+
 init();
