@@ -17,12 +17,12 @@ async function init() {
         const rows = data.split(/\r?\n/).filter(row => row.trim() !== "");
         
         items = rows.slice(1).map((row, i) => {
-            // Tırnak içindeki virgülleri koruyan akıllı ayırıcı
             const r = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
             const clean = (str) => str ? str.replace(/^"|"$/g, "").trim() : "";
 
             let specs = [];
-            for (let j = 7; j <= 17; j += 2) {
+            // Sütunlar 1 sağa kaydığı için indisleri +1 yaptık (8'den 18'e)
+            for (let j = 8; j <= 18; j += 2) {
                 if(r[j] && r[j+1] && clean(r[j]) !== "") {
                     specs.push({ k: clean(r[j]), v: clean(r[j+1]) });
                 }
@@ -30,10 +30,11 @@ async function init() {
 
             return {
                 id: i,
-                name: clean(r[1]),
-                cat: clean(r[2]).toUpperCase(),
-                desc: clean(r[3]),
-                images: [r[4], r[5], r[6]].map(u => clean(u)).filter(u => u && u.length > 5),
+                brand: clean(r[1]) || "MARINE", // Yeni eklenen Marka sütunu
+                name: clean(r[2]),
+                cat: clean(r[3]).toUpperCase(),
+                desc: clean(r[4]),
+                images: [r[5], r[6], r[7]].map(u => clean(u)).filter(u => u && u.length > 5),
                 specs: specs
             };
         }).filter(x => x.name);
@@ -56,45 +57,33 @@ function renderList(data) {
     grid.innerHTML = data.map(p => `
         <div class="p-card" onclick="openProduct(${p.id})">
             <div class="p-img-box"><img src="${p.images[0]}" onerror="this.src='https://via.placeholder.com/400x300'"></div>
-            <span style="color:var(--primary); font-size:10px; font-weight:800; letter-spacing:1px; display:block; padding: 0 10px;">${p.cat}</span>
-            <h3 style="padding: 0 10px; font-size: 16px;">${p.name}</h3>
+            <div style="padding: 0 10px;">
+                <span style="color:var(--primary); font-size:10px; font-weight:800; letter-spacing:1px; display:block; text-transform:uppercase;">${p.brand} | ${p.cat}</span>
+                <h3 style="font-size: 16px; margin-top:5px;">${p.name}</h3>
+            </div>
         </div>
     `).join('');
 }
 
-// PC Sürükleme (Drag to Scroll) Desteği
 function addDragSupport() {
     const track = document.getElementById('galleryTrack');
     if(!track) return;
-
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-
+    let isDown = false; let startX; let scrollLeft;
     track.addEventListener('mousedown', (e) => {
-        isDown = true;
-        track.style.scrollBehavior = 'auto';
-        startX = e.pageX - track.offsetLeft;
-        scrollLeft = track.scrollLeft;
+        isDown = true; track.style.scrollBehavior = 'auto';
+        startX = e.pageX - track.offsetLeft; scrollLeft = track.scrollLeft;
         track.style.cursor = 'grabbing';
     });
-
     track.addEventListener('mouseleave', () => { isDown = false; track.style.cursor = 'grab'; });
     track.addEventListener('mouseup', () => { 
-        isDown = false; 
-        track.style.scrollBehavior = 'smooth';
-        track.style.cursor = 'grab';
-        // En yakın resme yapışma
+        isDown = false; track.style.scrollBehavior = 'smooth'; track.style.cursor = 'grab';
         const idx = Math.round(track.scrollLeft / track.offsetWidth);
         track.scrollTo({ left: track.offsetWidth * idx, behavior: 'smooth' });
     });
-
     track.addEventListener('mousemove', (e) => {
-        if(!isDown) return;
-        e.preventDefault();
+        if(!isDown) return; e.preventDefault();
         const x = e.pageX - track.offsetLeft;
-        const walk = (x - startX) * 2;
-        track.scrollLeft = scrollLeft - walk;
+        const walk = (x - startX) * 2; track.scrollLeft = scrollLeft - walk;
     });
 }
 
@@ -115,18 +104,18 @@ window.openProduct = function(id) {
         </div>
         <div class="modal-info-side">
             <div class="info-header">
-                <span style="color:var(--primary); font-size:10px; font-weight:800; letter-spacing:2px;">NORTHSTAR MARINE</span>
+                <span style="color:var(--primary); font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase;">${p.brand}</span>
                 <h2 style="font-size:2rem; margin:10px 0; line-height:1.1;">${p.name}</h2>
                 <p style="color:#666; font-size:14px; line-height:1.5; margin-bottom:15px;">${p.desc}</p>
                 <div class="spec-list">${specsHTML}</div>
             </div>
             <div class="offer-box">
-                <p>Teklif ve Bilgi Alın:</p>
+                <p>TEKLİF VE BİLGİ ALIN:</p>
                 <div class="offer-btns">
-                    <a href="https://wa.me/905XXXXXXXXX?text=${p.name} teklifi rica ediyorum." class="btn-cta wa-btn" target="_blank">
+                    <a href="https://wa.me/905XXXXXXXXX?text=${p.brand} ${p.name} hakkında bilgi alabilir miyim?" class="btn-cta wa-btn" target="_blank">
                         <i class="fab fa-whatsapp"></i> WHATSAPP
                     </a>
-                    <a href="mailto:alicomertpay_@hotmail.com" class="btn-cta mail-btn">
+                    <a href="mailto:info@prorib.com.tr" class="btn-cta mail-btn">
                         <i class="fa-solid fa-envelope"></i> E-POSTA
                     </a>
                 </div>
@@ -135,7 +124,7 @@ window.openProduct = function(id) {
     `;
     modal.style.display = "block";
     document.body.style.overflow = "hidden";
-    addDragSupport(); // Modal her açıldığında sürükleme özelliğini bağla
+    addDragSupport();
 }
 
 window.scrollGallery = function(idx) {
