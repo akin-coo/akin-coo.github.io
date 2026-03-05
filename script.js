@@ -4,7 +4,7 @@ const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTh9yxv6g0Hz0prd
 const whatsappNumber = "905336332452";
 
 let items = [];
-const sliderImages = ['https://private-user-images.githubusercontent.com/140342689/558896773-e80da5fe-9374-4790-8f9a-372f187b599b.jpg?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NzI3MzcxMTksIm5iZiI6MTc3MjczNjgxOSwicGF0aCI6Ii8xNDAzNDI2ODkvNTU4ODk2NzczLWU4MGRhNWZlLTkzNzQtNDc5MC04ZjlhLTM3MmYxODdiNTk5Yi5qcGc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMzA1JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDMwNVQxODUzMzlaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1jMDhhZGE2OWE0ZTFlZmRlMDcwYzczZDc4MWJjMDJlNzdmMDMzYmY5MDFmMzliZDllOTZjZDM2ZGUzYjBjOTNkJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.FffjZXM205w6Nqs8G9za_OeAqFld3J0PzuVo4IyB0sk'];
+const sliderImages = ['kapak.jpg'];
 
 window.addEventListener('load', () => {
     const loader = document.getElementById('loader');
