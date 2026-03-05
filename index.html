@@ -3,16 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prorib | Northstar Marine</title>
+    <title>Prorib | Marine Excellence</title>
+    <link rel="icon" type="image/png" href="https://private-user-images.githubusercontent.com/140342689/558870563-fb329054-9940-4388-989b-caed33ed0891.jpg?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NzI3MzU2NzgsIm5iZiI6MTc3MjczNTM3OCwicGF0aCI6Ii8xNDAzNDI2ODkvNTU4ODcwNTYzLWZiMzI5MDU0LTk5NDAtNDM4OC05ODliLWNhZWQzM2VkMDg5MS5qcGc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMzA1JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDMwNVQxODI5MzhaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT01MGQxZGQwZjEyOWNkYWQ4NzE3MWI4ZGY5Y2RiZWVmYjA4ZGQ2OGZiMTQxZWVjMmFhYmZlZTllYmQxMTdjZTIyJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.c_IOBrOv_Sm0PxohmEU0fL9oUcMgUAVazeY3cnK5qP4">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="loader" class="loader-wrapper">
+        <img src="https://private-user-images.githubusercontent.com/140342689/558870563-fb329054-9940-4388-989b-caed33ed0891.jpg?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NzI3MzU2NzgsIm5iZiI6MTc3MjczNTM3OCwicGF0aCI6Ii8xNDAzNDI2ODkvNTU4ODcwNTYzLWZiMzI5MDU0LTk5NDAtNDM4OC05ODliLWNhZWQzM2VkMDg5MS5qcGc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMzA1JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDMwNVQxODI5MzhaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT01MGQxZGQwZjEyOWNkYWQ4NzE3MWI4ZGY5Y2RiZWVmYjA4ZGQ2OGZiMTQxZWVjMmFhYmZlZTllYmQxMTdjZTIyJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.c_IOBrOv_Sm0PxohmEU0fL9oUcMgUAVazeY3cnK5qP4" alt="Prorib Logo" class="loader-logo">
+    </div>
+
     <nav class="navbar" id="mainNav">
-        <div class="logo">PRO<span>RIB</span></div>
+        <div class="nav-left">
+            <img src="https://private-user-images.githubusercontent.com/140342689/558870563-fb329054-9940-4388-989b-caed33ed0891.jpg?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NzI3MzU2NzgsIm5iZiI6MTc3MjczNTM3OCwicGF0aCI6Ii8xNDAzNDI2ODkvNTU4ODcwNTYzLWZiMzI5MDU0LTk5NDAtNDM4OC05ODliLWNhZWQzM2VkMDg5MS5qcGc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMzA1JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDMwNVQxODI5MzhaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT01MGQxZGQwZjEyOWNkYWQ4NzE3MWI4ZGY5Y2RiZWVmYjA4ZGQ2OGZiMTQxZWVjMmFhYmZlZTllYmQxMTdjZTIyJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.c_IOBrOv_Sm0PxohmEU0fL9oUcMgUAVazeY3cnK5qP4" alt="Prorib Logo" class="brand-icon">
+            <div class="brand-name">PRO<span>RIB</span></div>
+        </div>
         <div class="nav-right">
-            <a href="https://wa.me/905XXXXXXXXX" target="_blank" class="nav-cta">WHATSAPP DESTEK</a>
+            <a href="https://wa.me/905336332452" target="_blank" class="nav-cta">WHATSAPP DESTEK</a>
         </div>
     </nav>
 
@@ -20,8 +28,9 @@
         <div class="slider-track" id="heroTrack"></div>
         <div class="hero-overlay">
             <div class="hero-glass-card">
-                <span class="tagline">OFFICIAL PARTNER</span>
-                <h1>MODERN <strong>MARINE.</strong></h1>
+                <span class="tagline">NORTHSTAR PARTNER</span>
+                <h1>PROFESYONEL<strong> EKİPMAN</strong></h1>
+                
             </div>
         </div>
     </header>
@@ -30,7 +39,9 @@
         <div class="filter-container" id="categoryMenu"></div>
     </section>
 
-    <main class="main-container"><div class="productGrid" id="productGrid"></div></main>
+    <main class="main-container">
+        <div class="productGrid" id="productGrid"></div>
+    </main>
 
     <div id="productModal" class="modal-overlay">
         <div class="modal-window">
@@ -38,6 +49,7 @@
             <div id="modalContent" class="modal-content-grid"></div>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
