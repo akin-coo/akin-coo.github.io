@@ -116,7 +116,7 @@ window.openProduct = function(id) {
     const specsHTML = p.specs.map(s => `<div class="spec-item"><span>${s.k}</span><strong>${s.v}</strong></div>`).join('');
 
     // WhatsApp mesajını güvenli hale getirelim
-    const waText = encodeURIComponent(`${p.brand} ${p.name} hakkında bilgi almak istiyorum.`);
+    const waText = encodeURIComponent(`Merhaba, ${p.brand} ${p.name} hakkında bilgi almak istiyorum.`);
     const waLink = `https://wa.me/${whatsappNumber}?text=${waText}`;
 
     content.innerHTML = `
