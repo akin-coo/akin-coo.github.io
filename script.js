@@ -1,10 +1,8 @@
 const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTh9yxv6g0Hz0prdHSICMZnQ8O_-2tMz6FLg3Qe-ixdNGsnXjXjtN7dsNRh5VC3JMhP3kp8nnz6MgY3/pub?output=csv';
-
-// BURAYA AMCANIN GERÇEK NUMARASINI YAZ (Örn: "905321234567")
-const whatsappNumber = "905336332452";
+const whatsappNumber = "905XXXXXXXXX"; // Buraya amcanın numarasını yaz!
 
 let items = [];
-const sliderImages = ['kapak.jpg'];
+const sliderImages = ['https://northstar.boats/assets/img/about-us-banner.webp', 'https://northstar.boats/assets/img/orion-8.webp', 'https://northstar.boats/assets/img/ion-12.webp'];
 
 window.addEventListener('load', () => {
     const loader = document.getElementById('loader');
@@ -30,14 +28,10 @@ async function init() {
         items = rows.slice(1).map((row, i) => {
             const r = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
             const clean = (str) => str ? str.replace(/^"|"$/g, "").trim() : "";
-
             let specs = [];
             for (let j = 11; j <= 40; j += 2) {
-                if(r[j] && r[j+1] && clean(r[j]) !== "") {
-                    specs.push({ k: clean(r[j]), v: clean(r[j+1]) });
-                }
+                if(r[j] && r[j+1] && clean(r[j]) !== "") specs.push({ k: clean(r[j]), v: clean(r[j+1]) });
             }
-
             return {
                 id: i,
                 brand: clean(r[1]) || "MARINE",
@@ -45,14 +39,31 @@ async function init() {
                 cat: clean(r[3]).toUpperCase(),
                 desc: clean(r[4]),
                 images: [r[5], r[6], r[7], r[8], r[9], r[10]].map(u => clean(u)).filter(u => u && u.length > 5),
-                specs: specs
+                specs: specs,
+                slug: clean(r[2]).toLowerCase().replace(/[^a-z0-9]/g, '-') // Daha temiz slug oluşturma
             };
         }).filter(x => x.name);
 
         createCategoryMenu();
         renderList(items);
-    } catch (err) { console.error("CSV Yükleme Hatası:", err); }
+
+        // SAYFA YÜKLENDİĞİNDE URL KONTROLÜ
+        const params = new URLSearchParams(window.location.search);
+        const productSlug = params.get('urun');
+        if (productSlug) {
+            const product = items.find(p => p.slug === productSlug);
+            if (product) openProduct(product.id, false);
+        }
+
+    } catch (err) { console.error("CSV Hatası:", err); }
 }
+
+// Geri Tuşu Desteği
+window.onpopstate = (e) => {
+    if (document.getElementById('productModal').style.display === "block") {
+        closeProduct(false);
+    }
+};
 
 function createCategoryMenu() {
     const menu = document.getElementById('categoryMenu');
@@ -79,67 +90,44 @@ function addDragSupport() {
     const track = document.getElementById('galleryTrack');
     if(!track) return;
     let isDown = false; let startX; let scrollLeft;
-    track.addEventListener('mousedown', (e) => {
-        isDown = true; track.style.scrollBehavior = 'auto';
-        startX = e.pageX - track.offsetLeft; scrollLeft = track.scrollLeft;
-        track.style.cursor = 'grabbing';
-    });
+    track.addEventListener('mousedown', (e) => { isDown = true; track.style.scrollBehavior = 'auto'; startX = e.pageX - track.offsetLeft; scrollLeft = track.scrollLeft; track.style.cursor = 'grabbing'; });
     track.addEventListener('mouseleave', () => { isDown = false; });
-    track.addEventListener('mouseup', () => { 
-        isDown = false; track.style.scrollBehavior = 'smooth'; track.style.cursor = 'grab';
-        const idx = Math.round(track.scrollLeft / track.offsetWidth);
-        track.scrollTo({ left: track.offsetWidth * idx, behavior: 'smooth' });
-    });
-    track.addEventListener('mousemove', (e) => {
-        if(!isDown) return; e.preventDefault();
-        const x = e.pageX - track.offsetLeft;
-        const walk = (x - startX) * 2; track.scrollLeft = scrollLeft - walk;
-    });
+    track.addEventListener('mouseup', () => { isDown = false; track.style.scrollBehavior = 'smooth'; track.style.cursor = 'grab'; const idx = Math.round(track.scrollLeft / track.offsetWidth); track.scrollTo({ left: track.offsetWidth * idx, behavior: 'smooth' }); });
+    track.addEventListener('mousemove', (e) => { if(!isDown) return; e.preventDefault(); const x = e.pageX - track.offsetLeft; const walk = (x - startX) * 2; track.scrollLeft = scrollLeft - walk; });
 }
 
-window.nextImage = function(currentIndex, totalImages) {
-    const nextIndex = (currentIndex + 1) % totalImages;
-    const track = document.getElementById('galleryTrack');
-    if(track) track.scrollTo({ left: track.offsetWidth * nextIndex, behavior: 'smooth' });
-}
-
-window.openProduct = function(id) {
+window.openProduct = function(id, updateHistory = true) {
     const p = items.find(x => x.id == id);
-    const modal = document.getElementById('productModal');
-    const content = document.getElementById('modalContent');
     if(!p) return;
 
-    const galleryHTML = p.images.map((img, index) => 
-        `<img src="${img}" draggable="false" onclick="nextImage(${index}, ${p.images.length})">`
-    ).join('');
+    // URL'Yİ GÜNCELLE (Deep Link & SEO)
+    if (updateHistory) {
+        const newUrl = window.location.origin + window.location.pathname + "?urun=" + p.slug;
+        window.history.pushState({ urun: p.slug }, p.name, newUrl);
+    }
+
+    const modal = document.getElementById('productModal');
+    const content = document.getElementById('modalContent');
+
+    const galleryHTML = p.images.map((img, index) => `<img src="${img}" draggable="false" onclick="window.nextImage(${index}, ${p.images.length})">`).join('');
     const dotsHTML = p.images.map((_, i) => `<div class="dot ${i===0?'active':''}" onclick="scrollGallery(${i})"></div>`).join('');
     const specsHTML = p.specs.map(s => `<div class="spec-item"><span>${s.k}</span><strong>${s.v}</strong></div>`).join('');
-
-    // WhatsApp mesajını güvenli hale getirelim
-    const waText = encodeURIComponent(`Merhaba, ${p.brand} ${p.name} hakkında bilgi almak istiyorum.`);
-    const waLink = `https://wa.me/${whatsappNumber}?text=${waText}`;
+    const waLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(p.brand + ' ' + p.name + ' hakkında bilgi almak istiyorum.')}`;
 
     content.innerHTML = `
-        <div class="modal-gallery-side">
-            <div class="gallery-track" id="galleryTrack" onscroll="updateDots()">${galleryHTML}</div>
-            <div class="gallery-dots">${dotsHTML}</div>
-        </div>
+        <div class="modal-gallery-side"><div class="gallery-track" id="galleryTrack" onscroll="updateDots()">${galleryHTML}</div><div class="gallery-dots">${dotsHTML}</div></div>
         <div class="modal-info-side">
             <div class="info-header">
-                <span style="color:var(--primary); font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:2px;">${p.brand}</span>
+                <span style="color:var(--primary); font-size:10px; font-weight:800; text-transform:uppercase;">${p.brand}</span>
                 <h2 style="font-size:2.2rem; margin:10px 0; line-height:1.1;">${p.name}</h2>
-                <p style="color:#666; font-size:14px; line-height:1.6; margin-bottom:15px;">${p.desc}</p>
+                <p style="color:#666; font-size:14px; line-height:1.6;">${p.desc}</p>
                 <div class="spec-list">${specsHTML}</div>
             </div>
             <div class="offer-box">
-                <p style="font-size:11px; font-weight:800; color:var(--gray); margin-bottom:12px;">TEKLİF VE DETAYLI BİLGİ ALMAK İÇİN BİZE ULAŞIN:</p>
+                <p style="font-size:11px; font-weight:800; color:var(--gray); margin-bottom:12px;">BİLGİ ALIN:</p>
                 <div class="offer-btns">
-                    <a href="${waLink}" target="_blank" class="btn-cta wa-btn">
-                        <i class="fab fa-whatsapp"></i> WHATSAPP
-                    </a>
-                    <a href="mailto:info@prorib.com.tr?subject=${p.brand} ${p.name}" class="btn-cta mail-btn">
-                        <i class="fa-solid fa-envelope"></i> E-POSTA
-                    </a>
+                    <a href="${waLink}" target="_blank" class="btn-cta wa-btn"><i class="fab fa-whatsapp"></i> WHATSAPP</a>
+                    <a href="mailto:info@prorib.com.tr?subject=${p.brand} ${p.name}" class="btn-cta mail-btn"><i class="fa-solid fa-envelope"></i> E-POSTA</a>
                 </div>
             </div>
         </div>
@@ -149,33 +137,24 @@ window.openProduct = function(id) {
     addDragSupport();
 }
 
-window.scrollGallery = function(idx) {
-    const track = document.getElementById('galleryTrack');
-    if(track) track.scrollTo({ left: track.offsetWidth * idx, behavior: 'smooth' });
-}
-
-window.updateDots = function() {
-    const track = document.getElementById('galleryTrack');
-    const dots = document.querySelectorAll('.dot');
-    if(!track || dots.length === 0) return;
-    const idx = Math.round(track.scrollLeft / track.offsetWidth);
-    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
-}
-
-window.closeProduct = function() {
+window.closeProduct = function(updateHistory = true) {
     document.getElementById('productModal').style.display = "none";
     document.body.style.overflow = "auto";
+    if (updateHistory) {
+        const homeUrl = window.location.origin + window.location.pathname;
+        window.history.pushState({}, '', homeUrl);
+    }
 }
 
-window.filterData = function(cat) {
-    document.querySelectorAll('.f-btn').forEach(btn => btn.classList.toggle('active', btn.innerText === cat));
-    renderList(cat === 'HEPSİ' ? items : items.filter(x => x.cat === cat));
-};
+window.nextImage = function(currentIndex, totalImages) {
+    const nextIndex = (currentIndex + 1) % totalImages;
+    const track = document.getElementById('galleryTrack');
+    if(track) track.scrollTo({ left: track.offsetWidth * nextIndex, behavior: 'smooth' });
+}
 
-window.onscroll = () => { 
-    const nav = document.getElementById('mainNav');
-    if(window.scrollY > 50) { nav.classList.add('scrolled'); } 
-    else { nav.classList.remove('scrolled'); }
-};
+window.scrollGallery = function(idx) { const track = document.getElementById('galleryTrack'); if(track) track.scrollTo({ left: track.offsetWidth * idx, behavior: 'smooth' }); }
+window.updateDots = function() { const track = document.getElementById('galleryTrack'); const dots = document.querySelectorAll('.dot'); if(!track || dots.length === 0) return; const idx = Math.round(track.scrollLeft / track.offsetWidth); dots.forEach((d, i) => d.classList.toggle('active', i === idx)); }
+window.filterData = function(cat) { document.querySelectorAll('.f-btn').forEach(btn => btn.classList.toggle('active', btn.innerText === cat)); renderList(cat === 'HEPSİ' ? items : items.filter(x => x.cat === cat)); };
+window.onscroll = () => { const nav = document.getElementById('mainNav'); if(window.scrollY > 50) nav.classList.add('scrolled'); else nav.classList.remove('scrolled'); };
 
 init();
